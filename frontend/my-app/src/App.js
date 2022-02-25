@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Welcome to GenTrend!
+          Welcome to GenTrend! The preferred music trend generator of Bernard.
         </p>
         <a
           className="App-link"
