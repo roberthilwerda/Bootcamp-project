@@ -1,16 +1,19 @@
-import React from 'react'
+import React from "react";
+import "./Header.css";
 
 const Header = () => {
-    return (
-        <header>
-            <div id="brand"><a href="/">MyCompany</a></div>
-            <nav>
-                <ul>
-                <li><a href="/home">Contact</a></li>
-                <li><a href="/products">About</a></li>
-                </ul>
-            </nav>
-        </header>
-    )
-}
+  return (
+    <div className="wrapper">
+      <div className="item">
+        <h4>Home</h4>
+      </div>
+      <div className="item">
+        <h4>Get Trends</h4>
+      </div>
+      <div className="item">
+        <h4>Contact</h4>
+      </div>
+    </div>
+  );
+};
 export default Header;

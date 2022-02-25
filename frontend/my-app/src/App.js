@@ -1,23 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Header from './components/Header';
+import Widgets from "./components/Widgets";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to GenTrend!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learning done!!
-        </a>
-      </header>
+    <div className={`main`}>
+      <Header></Header>
+      <Widgets></Widgets>
     </div>
   );
 }

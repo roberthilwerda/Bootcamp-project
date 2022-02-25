@@ -1,3 +1,17 @@
-header {
-    display: inline;
+.wrapper {
+    display: flex;
+    color: rgb(255, 255, 255);
+    justify-content: center;
+    background-color: black;
+}
+
+.item {
+    text-decoration: none;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.item:hover {
+    cursor: pointer;
 }
