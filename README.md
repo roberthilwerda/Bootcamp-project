@@ -7,4 +7,5 @@ npm install
 
 How to start:
 
+cd my-app
 npm start
