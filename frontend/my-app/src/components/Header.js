@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Header.css";
 
 const Header = () => {
@@ -15,13 +15,13 @@ const Header = () => {
           <img
             className={`header__logo`}
             alt=""
-            src={require("./gtlogo.png")}
+            src={require("./images/gtlogo.png")}
           />
         </div>
       </div>
 
-      <div onClick={clickHandler} className="header__menu-area">
-        <div className="header__menu-area-hamburger">
+      <div className="header__menu-area">
+        <div onClick={clickHandler} className="header__menu-area-hamburger">
           <h2>{showMenuItems ? "✕" : "☰"}</h2>
         </div>
 

@@ -4,7 +4,7 @@
 
 .main {
   background-color: rgba(245, 222, 179, 0.301);
-  color: wheat;
+  font-family:'Candara', sans-serif;
 }
 
 .App-logo {
