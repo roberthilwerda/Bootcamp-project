@@ -31,7 +31,7 @@
 
 .genre__image:hover {
   height: 100%;
-  transform: scale(1.1);
+  transform: scale(1.05);
   overflow: hidden;
   z-index: 2;
   opacity: 0.6;
