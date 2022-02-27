@@ -1,6 +1,6 @@
 .widgets__wrapper {
   padding: 5rem;
-  width: 70vw;
+  max-width: 1000px;
   color: rgb(29, 29, 29);
   display: flex;
   gap: 4rem;
@@ -11,7 +11,6 @@
 .widgets__item {
   width: 400px;
   height: 150px;
-  border: 1px solid black;
   border-radius: 1.5rem;
   padding: 2rem;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
@@ -20,12 +19,16 @@
 
 .widgets__item:hover {
   cursor: pointer;
-  background-color: rgb(104, 104, 104);
   transform: scale(1.02);
 }
 
 .widgets__item:active {
   cursor: pointer;
-  background-color: rgb(104, 104, 104);
   transform: scale(1.03);
+}
+
+@media (min-width: 300px) and (max-width: 1180px) {
+  .widgets__wrapper {
+    justify-content: center;
+  }
 }
