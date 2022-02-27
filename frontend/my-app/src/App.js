@@ -1,13 +1,13 @@
 import "./App.css";
 import Header from './components/Header';
-import Widgets from "./components/Widgets";
+import WidgetsPage from "./components/WidgetsPage";
 
 
 function App() {
   return (
     <div className={`main`}>
       <Header></Header>
-      <Widgets></Widgets>
+      <WidgetsPage></WidgetsPage>
     </div>
   );
 }
