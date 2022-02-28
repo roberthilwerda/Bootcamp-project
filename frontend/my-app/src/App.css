@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.main {
+  background-color: rgba(245, 222, 179, 0.301);
+  font-family:'Candara', sans-serif;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +41,4 @@
     transform: rotate(360deg);
   }
 }
+
