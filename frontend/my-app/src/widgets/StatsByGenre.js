@@ -1,4 +1,6 @@
 import "./StatsByGenre.css";
+import React from "react";
+import axios from "axios";
 
 const genreObj = {
   jazz: {
@@ -14,8 +16,12 @@ const genreObj = {
 const StatsByGenre = (props) => {
   const genre = genreObj[props.genre];
 
+  const clickHandler = () => {
+    fetch("http://localhost:8000/first").then(response => response.json()).then(data => console.log(data));
+  };
+
   return (
-    <div className="genre__item">
+    <div onClick={clickHandler} className="genre__item">
       <div className="genre__image-wrapper">
         <img alt="" className="genre__image" src={genre.image}></img>
       </div>
