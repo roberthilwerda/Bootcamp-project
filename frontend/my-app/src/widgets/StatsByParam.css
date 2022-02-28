@@ -26,15 +26,15 @@
   height: 100%;
   opacity: 0.3;
   overflow: hidden;
-  transition: transform 2s;
 }
 
 .param__image:hover {
-    height: 100%;
-    transform: scale(1.1);
+  height: 100%;
+  transform: scale(1.1);
   overflow: hidden;
   opacity: 0.6;
-  }
+  transition: transform 2s;
+}
 
 .param__title {
   position: relative;
@@ -44,7 +44,7 @@
   justify-content: center;
   flex-wrap: wrap;
   z-index: 2;
-  padding: 0.50rem;
+  padding: 0.5rem;
   border-top: 2px solid wheat;
   background-color: rgba(0, 0, 0, 0.397);
 }
