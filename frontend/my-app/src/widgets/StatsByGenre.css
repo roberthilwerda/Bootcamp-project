@@ -26,7 +26,6 @@
   height: 100%;
   opacity: 0.3;
   overflow: hidden;
-  transition: transform 2s;
 }
 
 .genre__image:hover {
@@ -34,18 +33,19 @@
   transform: scale(1.1);
   overflow: hidden;
   z-index: 2;
+  transition: transform 2s;
   opacity: 0.6;
 }
 
 .genre__title {
   position: relative;
-  bottom: 2.5rem;
+  bottom: 2.8rem;
   color: wheat;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   z-index: 2;
-  padding: 0.25rem;
+  padding: 0.50rem;
   border-top: 2px solid wheat;
   background-color: rgba(0, 0, 0, 0.397);
 }

@@ -21,7 +21,7 @@ const StatsByParam = (props) => {
       </div>
 
       <div className="param__title">
-        <div style={{'fontSize': 20}}>{param.tag} </div>
+        <div style={{ fontSize: 20}}>{param.tag} </div>
       </div>
 
     </div>
