@@ -5,6 +5,7 @@
 .main {
   background-color: rgba(245, 222, 179, 0.301);
   font-family:'Candara', sans-serif;
+  min-height: 100vh;
 }
 
 .App-logo {

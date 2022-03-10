@@ -10,10 +10,8 @@ artists_object = Artist(**artists_dict)
 
 test = Test(id = 100)
 
-
 Base.metadata.create_all(bind = engine)
 db = SessionLocal()
 
 db.add(test)
 db.commit()
-

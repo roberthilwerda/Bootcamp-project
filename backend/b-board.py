@@ -6,9 +6,6 @@ rock_genre = []
 pop_genre = []
 jazz_genre =[]
 
-
-
-
 if chart.artist in billboard.ChartData('rock-songs'):
     rock_genre.append(chart.artist)
 elif chart.artist in billboard.ChartData('pop-songs'):
@@ -18,7 +15,4 @@ elif chart.artist in billboard.ChartData('jazz-genre'):
 print(rock_genre)
 print(pop_genre)
 
-
-
 ###print(chart[0].artist)
-

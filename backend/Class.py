@@ -1,6 +1,4 @@
-
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-
 
 from database_connection import Base
 
@@ -26,4 +24,3 @@ class Test(Base):
 # artists_dict = json.loads(json.dumps(all_dict))
 # artists_object = Artist(**artists_dict) 
 # print(artists_object)
-
