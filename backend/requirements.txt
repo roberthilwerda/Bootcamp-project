@@ -2,3 +2,6 @@ fastapi
 uvicorn
 httpx
 billboard.py
+sqlalchemy
+database_connection
+spotipy
