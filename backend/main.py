@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 import bboard
 import spotipyapi
+import json
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas
@@ -12,9 +13,9 @@ models.Base.metadata.create_all(bind=engine)
 
 def get_genres():
     artists = bboard.extract_artists()
-    for artist in artists:
-        result = spotipyapi.retrieve_artist(artist)
-        print(result)
+    artists_jsons = [spotipyapi.retrieve_artist(artist) for artist in artists]
+    with open("json_output.txt", "w") as file:
+        file.write(json.dumps(artists_jsons))
         
 
 app = FastAPI()
