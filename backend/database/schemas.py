@@ -1,12 +1,8 @@
+from uuid import UUID
 from pydantic import BaseModel
 
-class GenreBase(BaseModel):
-    title: str
-    description: str | None = None
-
-
-class Genre(GenreBase):
-    id: int
+class Genre(BaseModel):
+    uuid: UUID
     name: str
     class Config:
         orm_mode = True
