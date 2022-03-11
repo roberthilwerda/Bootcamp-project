@@ -1,8 +1,16 @@
 from fastapi import FastAPI
 from typing import Optional
 from pydantic import BaseModel
-import billboard
+import bboard
+import spotipyapi
 from fastapi.middleware.cors import CORSMiddleware
+
+def get_genres():
+    artists = bboard.extract_artists()
+    for artist in artists:
+        result = spotipyapi.retrieve_artist(artist)
+        print(result)
+        
 
 app = FastAPI()
 
