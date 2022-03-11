@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from typing import Optional
 from pydantic import BaseModel
-import httpx
 import billboard
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+## CORS block of browser workaround
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
