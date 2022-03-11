@@ -11,11 +11,11 @@ sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
 
 def retrieve_artist(name):  
     results = sp.search(q = name, limit =20, type ='artist')
-##for idx, track in enumerate(results['tracks']['items']):
-    ##print(idx, track['name'])
-
-    return results['artists']['items'][0]
-    ##print(results['artists']['items'][0].keys())
+    result = results['artists']['items']
+    if len(result) == 0:
+        return "nothing"
+    else:
+        return result[0]
 
 #retrieve_artist('linkin park')
 
