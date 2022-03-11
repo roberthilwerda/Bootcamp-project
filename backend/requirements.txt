@@ -6,3 +6,4 @@ sqlalchemy
 spotipy
 pydantic
 json
+uuid
