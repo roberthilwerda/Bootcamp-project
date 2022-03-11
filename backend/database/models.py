@@ -5,12 +5,11 @@ from .database import Base
 
 class Artist(Base):
     __tablename__ = 'Artists'
-    id = Column(int, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
     external_urls = Column(String,index = True)
     followers = Column(Integer, index = True)
     genres = Column(String, index = True)
     href = Column(String, index= True)
-    id = Column(String, primary_key= True, index= True)
     images = Column(String, index= True)
     name = Column(String, index= True)
     popularity = Column(Integer, index= True)

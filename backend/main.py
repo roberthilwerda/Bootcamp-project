@@ -1,10 +1,22 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
 from typing import Optional
 from pydantic import BaseModel
 import billboard
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from database import crud, models, schemas
+from database.database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 ## CORS block of browser workaround
 origins = [
@@ -32,3 +44,11 @@ def index():
 def index():
     data = billboard.ChartData('hot-100')
     return {str(data.entries[1])}
+
+
+@app.post("/create_artists/{name}", response_model=schemas.Artist)
+def create_artist(artist: schemas.ArtistCreate, db: Session = Depends(get_db)):
+    db_artist = crud.get_artist_by_name(db, name=artist.name)
+    if db_artist:
+        raise HTTPException(status_code=400, detail="Artist already registered")
+    return crud.create_artist(db=db, artist=artist)
