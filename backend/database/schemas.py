@@ -4,8 +4,8 @@ class ArtistBase(BaseModel):
     title: str
     description: str | None = None
 
-# class ArtistCreate(ArtistBase):
-#     pass
+class ArtistCreate(ArtistBase):
+    pass
 
 class Artist(ArtistBase):
     id: int

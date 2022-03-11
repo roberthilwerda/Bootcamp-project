@@ -1,6 +1,5 @@
 import "./StatsByGenre.css";
 import React from "react";
-import axios from "axios";
 
 const genreObj = {
   jazz: {
