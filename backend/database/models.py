@@ -16,7 +16,12 @@ class Artist(Base):
     type = Column(String, index=True )
     uri = Column(String, index = True)
 
-class Test(Base):
-    __tablename__ = "Test"
-    id = Column(Integer, primary_key=True, index=True)
+    def convert_artist():
+        artist_
+
+class Song(Base):
+    __tablename__ = "Songs"
+    song_id = Column(Integer, primary_key=True, index=True)
+    songs = Column(String,index = True)
+
 
