@@ -1,6 +1,8 @@
+import imp
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
 import json
+from bboard import extract_artists
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_id="5c054684e6e1465c8b90678a69e8985b", client_secret="3cc836959c214ae4b9ffb0afdd0a14d8"))
@@ -16,8 +18,9 @@ def retrieve_artist(name):
     else:
         return result[0]
 
+artist = extract_artists()
 #retrieve_artist('linkin park')
-
+print(retrieve_artist(artist)) 
 
 
 # artists_object = Artist(**artists_dict)
