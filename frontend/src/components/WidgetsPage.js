@@ -1,6 +1,7 @@
 import "./WidgetsPage.css";
 import StatsByGenre from "../widgets/StatsByGenre";
 import StatsByParam from "../widgets/StatsByParam";
+import ChartGenre from "../widgets/ChartGenre";
 import { useState } from "react";
 
 const WidgetsPage = () => {
@@ -35,7 +36,10 @@ const WidgetsPage = () => {
         <StatsByGenre genre={"jazz"} filter={`some genre`} />
       </div>
 
-      <div className="chart__col">Chart here</div>
+      <div className="chart__col">
+        <ChartGenre/>
+        </div>
+      
       
       <button onClick={fetchGenresHandler}> Click here</button>
       <div>{apiData}</div>

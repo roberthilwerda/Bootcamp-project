@@ -44,4 +44,11 @@ class GenreArtist(Base):
     genre = relationship("Genre", back_populates="genre_artist")
     artist = relationship("Artist", back_populates="genre_artist")
 
+class SongArtist(Base):
+    __tablename__ = 'song_artist'
+    id = Column(UUID(as_uuid=True), primary_key=True, index=True)
+    song_id = Column(UUID, ForeignKey("song.id"))
+    artist_id = Column(UUID, ForeignKey("artist.id"))
 
+    song = relationship("Song", back_populates="song_artist")
+    artist = relationship("Artist", back_populates="song_artist")
