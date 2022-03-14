@@ -5,6 +5,5 @@ billboard.py
 sqlalchemy
 spotipy
 pydantic
-json
 uuid
 typing
