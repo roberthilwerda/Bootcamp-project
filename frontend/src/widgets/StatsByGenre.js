@@ -16,7 +16,7 @@ const StatsByGenre = (props) => {
   const genre = genreObj[props.genre];
 
   const clickHandler = () => {
-    fetch("http://localhost:8000/first").then(response => response.json()).then(data => console.log(data));
+    ;
   };
 
   return (
