@@ -37,6 +37,41 @@ h3 {
   padding: none;
 }
 
+.genre_page__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid blue;
+
+}
+
+.genre_page__back {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 100%;
+  margin: 1rem;
+}
+
+.genre_page__back:hover {
+  cursor: pointer;
+}
+
+.genre_page__title {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 100%;
+  margin: 1rem;
+}
+
+.genre_page__body {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 100%;
+  margin: 1rem;
+}
+
 @media (min-width: 300px) and (max-width: 1100px) {
   .widgetspage__wrapper {
     justify-content: center;
