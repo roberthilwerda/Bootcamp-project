@@ -41,6 +41,3 @@ app.add_middleware(
 def get_all_genres(db: Session = Depends(get_db)):
     return crud.get_all_genres(db=db)
 
-@app.get("./{genre}")
-def get_genre(db: Session = Depends(get_db)):
-    return crud.get_genre(db=db)
