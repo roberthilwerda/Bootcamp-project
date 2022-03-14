@@ -8,15 +8,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas
 from database.database import SessionLocal, engine
+from uuid import UUID
 
 models.Base.metadata.create_all(bind=engine)
-
-def get_genres():
-    artists = bboard.extract_artists()
-    artists_jsons = [spotipyapi.retrieve_artist(artist) for artist in artists]
-    with open("json_output.txt", "w") as file:
-        file.write(json.dumps(artists_jsons))
-        
 
 app = FastAPI()
 
@@ -44,20 +38,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get('/first')
-def index():
-    data = billboard.ChartData('hot-100')
-    return {str(data.entries[0])}
+@app.post("/add_genres", response_model=schemas.Genre)
+def add_genre(genre: schemas.Genre, db: Session = Depends(get_db)):
 
-@app.get('/second')
-def index():
-    data = billboard.ChartData('hot-100')
-    return {str(data.entries[1])}
-
-
-@app.post("/create_artists/{name}", response_model=schemas.Artist)
-def create_artist(artist: schemas.ArtistCreate, db: Session = Depends(get_db)):
-    db_artist = crud.get_artist_by_name(db, name=artist.name)
-    if db_artist:
-        raise HTTPException(status_code=400, detail="Artist already registered")
-    return crud.create_artist(db=db, artist=artist)
+    return crud.create_genre(db=db, genre=genre)

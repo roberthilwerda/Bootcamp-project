@@ -1,14 +1,8 @@
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
-import json
-
-
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-    client_id="5c054684e6e1465c8b90678a69e8985b", client_secret="f246bb057efc4f77a0415a4f1611bd29"))
-
-
-
+    client_id="737f07244f3e435d9a3485e71acdceb7", client_secret="a49eef30bab647e8aa36e4c20c4835e3"))
 
 def retrieve_artist(name):
     results = sp.search(q = name, limit =20, type ='artist')
@@ -16,6 +10,10 @@ def retrieve_artist(name):
     if len(result) == 0:
         return 'nothing'
     else: 
-        return result[0]
+        return result 
+    
+    
+    
 
-print(retrieve_artist('linkin park'))
+
+
