@@ -4,7 +4,8 @@ httpx
 billboard.py
 sqlalchemy
 spotipy
+numpy
+
 pydantic
-json
 uuid
 typing
