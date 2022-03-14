@@ -7,3 +7,4 @@ spotipy
 pydantic
 json
 uuid
+typing

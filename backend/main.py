@@ -23,8 +23,6 @@ def get_db():
 
 ## CORS block of browser workaround
 origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:3000",
     "https://localhost:3000",
@@ -38,7 +36,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/add_genres", response_model=schemas.Genre)
-def add_genre(genre: schemas.Genre, db: Session = Depends(get_db)):
 
-    return crud.create_genre(db=db, genre=genre)
+@app.get("/")
+def get_all_genres(db: Session = Depends(get_db)):
+    return crud.get_all_genres(db=db)
+
+@app.get("./{genre}")
+def get_genre(db: Session = Depends(get_db)):
+    return crud.get_genre(db=db)

@@ -1,5 +1,5 @@
 .widgetspage__wrapper {
-  max-width: 1000px;
+  /* max-width: 900px; */
   color: rgb(80, 65, 37);
   display: flex;
   flex-wrap: wrap;
@@ -19,12 +19,57 @@
   flex-wrap: wrap;
   justify-content: center;
   min-width: 45%;
-  max-width: 450px;
+  max-width: 900px;
+  border: 2px solid red;
+}
+
+.chart__col {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-width: 45%;
+  max-width: 900px;
+  border: 2px solid red;
 }
 
 h3 {
   margin: none;
   padding: none;
+}
+
+.genre_page__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid blue;
+
+}
+
+.genre_page__back {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 100%;
+  margin: 1rem;
+}
+
+.genre_page__back:hover {
+  cursor: pointer;
+}
+
+.genre_page__title {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 100%;
+  margin: 1rem;
+}
+
+.genre_page__body {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 100%;
+  margin: 1rem;
 }
 
 @media (min-width: 300px) and (max-width: 1100px) {
