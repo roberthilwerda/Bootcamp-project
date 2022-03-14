@@ -1,2 +1,10 @@
 fastapi
 uvicorn
+httpx
+billboard.py
+sqlalchemy
+spotipy
+pydantic
+json
+uuid
+typing

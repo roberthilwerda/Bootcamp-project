@@ -1,0 +1,36 @@
+.widgetspage__wrapper {
+  max-width: 1000px;
+  color: rgb(80, 65, 37);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.widgetspage__title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2.5rem;
+}
+
+.widgetspage__col {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-width: 45%;
+  max-width: 450px;
+}
+
+h3 {
+  margin: none;
+  padding: none;
+}
+
+@media (min-width: 300px) and (max-width: 1100px) {
+  .widgetspage__wrapper {
+    justify-content: center;
+  }
+
+ 
+}
