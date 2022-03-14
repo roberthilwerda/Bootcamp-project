@@ -36,14 +36,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/add_genres", response_model=schemas.Genre)
-def add_genre(genre: schemas.Genre, db: Session = Depends(get_db)):
-    return crud.create_genre(db=db, genre=genre)
 
-@app.post("/update_genres")
-def update_genres(db: Session = Depends(get_db)):
-    return crud.update_genres(db=db)
-
-@app.get("/get_all_genres")
+@app.get("/")
 def get_all_genres(db: Session = Depends(get_db)):
     return crud.get_all_genres(db=db)
+
+@app.get("./{genre}")
+def get_genre(db: Session = Depends(get_db)):
+    return crud.get_genre(db=db)

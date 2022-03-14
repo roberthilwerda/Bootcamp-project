@@ -15,12 +15,9 @@ const genreObj = {
 const StatsByGenre = (props) => {
   const genre = genreObj[props.genre];
 
-  const clickHandler = () => {
-    ;
-  };
 
   return (
-    <div onClick={clickHandler} className="genre__item">
+    <div onClick={() => {props.onClickHandler(genre.tag)}} className="genre__item">
       <div className="genre__image-wrapper">
         <img alt="" className="genre__image" src={genre.image}></img>
       </div>

@@ -29,4 +29,6 @@ def update_genres(db: Session):
 def get_all_genres(db: Session):
     genres = db.query(models.Genre).all()
     return genres
-    
+
+def get_genre(db: Session):
+    pass
