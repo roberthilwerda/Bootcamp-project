@@ -4,34 +4,39 @@ import StatsByParam from "../widgets/StatsByParam";
 import { useState } from "react";
 
 const WidgetsPage = () => {
+  let trendingGenres = ["Jazz", "Rock", "Blues", "Classical", "EDM", "Reggae",];
+  let [pageContent, setPageContent] = useState();
+
   let [apiData, setApiData] = useState("Click to fetch");
 
   async function fetchGenresHandler() {
     const response = await fetch("http://localhost:8000/get_all_genres");
     const data = await response.json();
 
-    console.log(data)
-    // setApiData(data[0]);
+    console.log(data);
+    setApiData(data[0].name);
+  }
+
+  const clickHandler = () => {
+    console.log("testtest")
   }
 
   return (
     <div className="widgetspage__wrapper">
       <div className="widgetspage__col">
         <div style={{ fontSize: 30 }} className="widgetspage__title">
-          Statistics by genre
+          Most trending genres
         </div>
+        <StatsByGenre genre={"jazz"} filter={`some genre`} onClick={clickHandler}/>
+        <StatsByGenre genre={"pop"} filter={`some genre`} />
+        <StatsByGenre genre={"jazz"} filter={`some genre`} />
         <StatsByGenre genre={"jazz"} filter={`some genre`} />
         <StatsByGenre genre={"pop"} filter={`some genre`} />
         <StatsByGenre genre={"jazz"} filter={`some genre`} />
       </div>
-      <div className="widgetspage__col">
-        <div style={{ fontSize: 30 }} className="widgetspage__title">
-          Statistics by variable
-        </div>
-        <StatsByParam param={"views"} filter={`some parameters`} />
-        <StatsByParam param={"chart"} filter={`some parameters`} />
-        <StatsByParam param={"chart"} filter={`some parameters`} />
-      </div>
+
+      <div className="chart__col">Chart here</div>
+      
       <button onClick={fetchGenresHandler}> Click here</button>
       <div>{apiData}</div>
     </div>
