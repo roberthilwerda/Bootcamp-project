@@ -11,6 +11,7 @@ class Artist(Base):
     external_urls = Column(String,index = True)
     followers = Column(Integer, index = True)
     href = Column(String, index= True)
+    images = Column(String,index = True)
     name = Column(String, index= True)
     popularity = Column(Integer, index= True)
     type = Column(String, index=True)
@@ -43,5 +44,10 @@ class GenreArtist(Base):
 
     genre = relationship("Genre", back_populates="genre_artist")
     artist = relationship("Artist", back_populates="genre_artist")
+
+class Song(Base):
+    __tablename__ = "Songs"
+    song_id = Column(Integer, primary_key=True, index=True)
+    songs = Column(String,index = True)
 
 
