@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import bboard
 import spotipyapi
 import json
+import external
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas
@@ -35,6 +36,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/secret_update_page")
+def update(db: Session = Depends(get_db)):
+    data = external.get_genres()
+    for item in data:
+        genre = models.Genre(item["genre"])
+        artist = models.Artist
+        song = models.Song
+        song = models.GenreArtist
+
 
 
 @app.get("/")

@@ -14,7 +14,7 @@ def get_genres():
                 dict_new = {}
                 dict_new['external_urls'] = artist[0]['external_urls']['spotify']
                 dict_new['followers'] = artist[0]['followers']['total']
-                dict_new['genres'] = artist[0]['genres'][0]
+                dict_new['genre'] = artist[0]['genres'][0]
                 dict_new['href'] = artist[0]['href']
                 dict_new['images'] = artist[0]['images'][0]
                 dict_new['name'] = artist[0]['name']
@@ -22,7 +22,6 @@ def get_genres():
                 
             main_artist_list.append(dict(dict_new))
 
-    return len(main_artist_list)
-print(get_genres())
+    return main_artist_list
 
     
