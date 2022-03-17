@@ -36,7 +36,7 @@ def get_chart_data():
     for artist in artists_data:
         if artist != 'None':
             artists_data_clean.append(artist)
-    
+    ## QUESTION: Where are the songs in this dictionary?
     for artist in artists_data_clean:
         dict_new = {}
             
@@ -61,6 +61,6 @@ def get_chart_data():
         if artist[0]['popularity']:
             dict_new['popularity'] = artist[0]['popularity']
             
-        final_data.append(dict_new)
+        final_data.append(dict(dict_new))
                 
     return final_data
