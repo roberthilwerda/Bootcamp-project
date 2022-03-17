@@ -1,5 +1,5 @@
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -7,6 +7,7 @@ import uuid
 
 class Artist(Base):
     __tablename__ = 'artist'
+<<<<<<< HEAD
     id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)
     external_urls = Column(String,index = True)
     followers = Column(Integer, index = True)
@@ -15,6 +16,17 @@ class Artist(Base):
     popularity = Column(Integer, index= True)
     type = Column(String, index=True)
     uri = Column(String, index = True)
+=======
+    id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
+    name = Column(String, unique=True)
+    external_urls = Column(String)
+    followers = Column(Integer)
+    href = Column(String)
+    images = Column(String)
+    popularity = Column(Float)
+    type = Column(String)
+    uri = Column(String)
+>>>>>>> development
     
     songs = relationship("Song", back_populates="artist")
     genre_artist = relationship("GenreArtist", back_populates="artist")
@@ -22,9 +34,14 @@ class Artist(Base):
 
 class Genre(Base):
     __tablename__ = 'genre'
+<<<<<<< HEAD
     id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String, index=True)
     popularity = Column(Integer, index=True)
+=======
+    id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
+    name = Column(String, unique=True)
+>>>>>>> development
 
     genre_artist = relationship("GenreArtist", back_populates="genre")
 

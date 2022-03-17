@@ -9,7 +9,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas
 from database.database import SessionLocal, engine
-from uuid import UUID
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -51,4 +50,8 @@ def update(db: Session = Depends(get_db)):
 @app.get("/")
 def get_all_genres(db: Session = Depends(get_db)):
     return crud.get_all_genres(db=db)
+
+@app.get("/populate_database")
+def populate_database(db: Session = Depends(get_db)):
+    return crud.populate_database(db=db)
 
