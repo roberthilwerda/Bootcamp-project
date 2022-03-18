@@ -45,11 +45,17 @@ class GenreArtist(Base):
     genre = relationship("Genre", back_populates="genre_artist")
     artist = relationship("Artist", back_populates="genre_artist")
 
-class SongArtist(Base):
-    __tablename__ = 'song_artist'
-    id = Column(UUID(as_uuid=True), primary_key=True, index=True)
-    song_id = Column(UUID, ForeignKey("song.id"))
-    artist_id = Column(UUID, ForeignKey("artist.id"))
+class RawData(Base):
+    __tablename__ = 'raw_data'
+    id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)
+    artist_name = Column(String,index = True)
+    external_url = Column(String,index = True)
+    number_of_followers = Column(Integer, index = True)
+    genre = Column(Integer,index = True)
+    image_url = Column(String,index = True)
+
+
+
 
     song = relationship("Song", back_populates="song_artist")
     artist = relationship("Artist", back_populates="song_artist")
