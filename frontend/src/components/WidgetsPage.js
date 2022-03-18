@@ -49,6 +49,7 @@ const WidgetsPage = () => {
   const initialPageContent = (
     <div className="widgetspage__wrapper">
       <div className="widgetspage__col">
+
         <div style={{ fontSize: 20 }} className="widgetspage__title">
           <p>Most popular genres</p>
         </div>
@@ -89,10 +90,10 @@ const WidgetsPage = () => {
 
       <div className="chart__col">
         <div style={{ fontSize: 20 }} className="widgetspage__title">
-          <p>Trends per genre</p>
+          <p>Trends</p>
         </div>
 
-        <div className="widgetspage__body">
+        <div className="chart__body">
 
           <div className="chart__item">
             <ChartGenre />
