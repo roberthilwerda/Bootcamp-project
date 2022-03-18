@@ -1,11 +1,16 @@
+from msilib import schema
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Optional
 from pydantic import BaseModel
+import uvicorn
+# import bboard
+# import spotipyapi
 import json
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas, utils
 from database.database import SessionLocal, engine
+from datetime import datetime
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -33,39 +38,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/secret_update_page")
-def update(db: Session = Depends(get_db)):
-    chart_data = utils.get_chart_data()
-    for item in chart_data:
-        genre = models.Genre(item["genres"])
-        artist = models.Artist(
-            external_urls = item["external_urls"],
-            followers = item["followers"],
-            href = item["href"],
-            name = item["name"],
-            popularity = item["popularity"],
-            #type 
-            #uri I think these properties are not nessecery?
-        )
-        song = models.Song
-        song = models.GenreArtist
+@app.get("/", response_model=list[schemas.Genre])
+def get_genres(db: Session = Depends(get_db)):
+    obj = models.Genre(name = "pop")
+    print(obj)
+    crud.create_genre(db, obj)
+    genres = crud.get_all_genres(db)
+    return [{"name": genre} for genre in genres]
 
-@app.get("/")
-def get_all_genres(db: Session = Depends(get_db)):
-    return crud.get_all_genres(db=db)
 
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
-    data= utils.get_chart_data()
-    for item in data: 
-        entry = models.Raw_data(
-          external_urls = item[]
-    followers = 
-    genres = 
-    href = 
-    images = 
-    name = 
-    popularity =  
-        )
-    return crud.populate_database(db=db)
+    return utils.populate_database(db=db)
 
+@app.get("/populate_database_manual/{date}")
+def populate_database_manual(date: str, db: Session = Depends(get_db)):
+    return utils.populate_database(db=db, date=date)
+
+
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000)

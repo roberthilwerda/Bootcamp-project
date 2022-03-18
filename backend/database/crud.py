@@ -1,57 +1,42 @@
 from numpy import array
 from sqlalchemy.orm import Session
-from . import utils
 from . import models, schemas
 
-def create_rawdata(db: Session, raw_data_entry: models.Raw_data):
-    db.add(raw_data_entry)
-    db.commit()
-    db.refresh(raw_data_entry)
-    return raw_data_entry
 
-def create_genre(db: Session, genre: schemas.Genre):
-    db_item = models.Genre(name=genre.name) ## create Genre instance with your data
-    db.add(db_item) 
+def create_genre(db: Session, genre: models.Genre):
+    # create Genre instance with your data
+    db.add(genre)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(genre)
+
 
 def update_genres(db: Session):
     print("UPDATING GENRES")
-    genres = ["Rock", "Jazz", "Blues"] ## replace this array with the data from the API
+    # replace this array with the data from the API
+    genres = ["Rock", "Jazz", "Blues"]
     response = []
 
     for x in genres:
-        
-        db_item = models.Genre(name=x) ## create Genre instance with your data
-        db.add(db_item) 
+
+        db_item = models.Genre(name=x)  # create Genre instance with your data
+        db.add(db_item)
         response.append({'name': db_item.name})
         db.commit()
         db.refresh(db_item)
-        
-    
+
     return response
+
 
 def get_all_genres(db: Session):
     genres = db.query(models.Genre).all()
-    return genres
+    return [str(genre) for genre in genres]
 
-def get_genre(db: Session):
-    pass
 
-def populate_database(db: Session):
-    ## retrieve object from davids function
-    objects = utils.get_chart_data() ## array of objects
-    genres = []
+def create_raw_data(db:Session, item):
+    db.add(item)
+    db.commit()
+    db.refresh(item)
 
-    # print(objects)
 
-    for object in objects:
-        try:
-            genres.append(object['genres'])
-        except:
-            pass
-    
-    return genres
-    
-    
+
+
