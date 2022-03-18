@@ -35,8 +35,11 @@ def get_all_genres(db: Session):
     return genres
 
 
-def get_genre(db: Session):
-    pass
+def create_raw_data(db:Session, item):
+    db.add(item)
+    db.commit()
+    db.refresh(item)
+
 
 
 

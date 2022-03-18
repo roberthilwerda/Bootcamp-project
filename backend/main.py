@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas, utils
 from database.database import SessionLocal, engine
+from datetime import datetime
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -38,5 +39,10 @@ app.add_middleware(
 
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
-    return utils.populate_database(db=db, date="2020-09-08")
+    return utils.populate_database(db=db)
+
+@app.get("/populate_database_manual/{date}")
+def populate_database_manual(date: str, db: Session = Depends(get_db)):
+    return utils.populate_database(db=db, date=date)
+
 
