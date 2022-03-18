@@ -36,7 +36,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
     return utils.populate_database(db=db)

@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import './ChartGenre.css'
 
 ChartJS.register(
   CategoryScale,
@@ -74,7 +75,7 @@ const data = {
 
 const ChartGenre = (props) => {
     return (
-      <div>
+      <div className='chart__container'>
         <Line
           data={data}
         />

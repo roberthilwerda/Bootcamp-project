@@ -29,11 +29,9 @@ def update_genres(db: Session):
 
     return response
 
-
 def get_all_genres(db: Session):
     genres = db.query(models.Genre).all()
     return genres
-
 
 def create_raw_data(db:Session, item):
     db.add(item)

@@ -1,7 +1,5 @@
 import "./WidgetsPage.css";
 import StatsByGenre from "../widgets/StatsByGenre";
-
-import StatsByParam from "../widgets/StatsByParam";
 import ChartGenre from "../widgets/ChartGenre";
 import GenrePage from "./GenrePage";
 import { useState } from "react";
@@ -50,10 +48,15 @@ const WidgetsPage = () => {
 
   const initialPageContent = (
     <div className="widgetspage__wrapper">
+
+
       <div className="widgetspage__col">
-        <div style={{ fontSize: 30 }} className="widgetspage__title">
-          Most trending genres
+
+        <div style={{ fontSize: 20 }} className="widgetspage__title">
+          <p>Most popular genres</p>
         </div>
+
+
         <StatsByGenre
           genre={"jazz"}
           filter={`some genre`}
@@ -86,15 +89,14 @@ const WidgetsPage = () => {
         />
       </div>
 
-
       <div className="chart__col">
-        <ChartGenre/>
-        </div>
-      <button onClick={fetchGenresHandler}> Click here</button>
-      <div>{apiData}</div>
-      <div className="chart__col">Chart here</div>
-      <button onClick={fetchGenresHandler}>Click here</button>
 
+        <div style={{ fontSize: 20 }} className="widgetspage__title">
+          <p>Trends per genre</p>
+        </div>
+
+        <ChartGenre />
+      </div>
     </div>
   );
 
