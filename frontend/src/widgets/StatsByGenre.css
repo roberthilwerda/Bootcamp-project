@@ -1,7 +1,7 @@
 .genre__item {
-  width: 400px;
-  margin: 2rem 1rem;
-  height: 210px;
+  width: 45%;
+  margin: 1rem 1rem;
+  height: 14rem;
   border-radius: 1rem;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
   overflow: hidden;
@@ -52,4 +52,11 @@
 
 .genre__title:hover {
   background-color: rgba(0, 0, 0, 0.397);
+}
+
+
+@media (min-width: 300px) and (max-width: 1100px) {
+  .genre__item {
+    width: 500px;
+  }
 }

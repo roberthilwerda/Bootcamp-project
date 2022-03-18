@@ -1,0 +1,8 @@
+.chart__container {
+    width: 80%;
+    /* height: 200px; */
+    background-color: black;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
+    border-radius: 15px;
+    /* border: 4px solid red; */
+}
