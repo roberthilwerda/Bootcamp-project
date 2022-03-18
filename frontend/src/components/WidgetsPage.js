@@ -48,54 +48,61 @@ const WidgetsPage = () => {
 
   const initialPageContent = (
     <div className="widgetspage__wrapper">
-
-
       <div className="widgetspage__col">
-
         <div style={{ fontSize: 20 }} className="widgetspage__title">
           <p>Most popular genres</p>
         </div>
 
-
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"pop"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"pop"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
+        <div className="widgetspage__body">
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"pop"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"pop"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+        </div>
       </div>
 
       <div className="chart__col">
-
         <div style={{ fontSize: 20 }} className="widgetspage__title">
           <p>Trends per genre</p>
         </div>
 
-        <ChartGenre />
+        <div className="widgetspage__body">
+
+          <div className="chart__item">
+            <ChartGenre />
+          </div>
+
+          <div className="chart__item">
+            <ChartGenre />
+          </div>
+
+        </div>
       </div>
     </div>
   );
