@@ -2,61 +2,59 @@ import billboard
 from numpy import NaN 
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
+from sqlalchemy.orm import Session
+from . import models
+
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_id="737f07244f3e435d9a3485e71acdceb7", client_secret="a49eef30bab647e8aa36e4c20c4835e3"))
 
-## Define date here
-date = "2021-04-04"
 
 ## Returns an array of all artists in the Billboard Global 200 for a given date
-def extract_artists():
-    charts = billboard.ChartData("billboard-global-200", date)
-    return [chart for chart in charts]
+def extract_chart(date):
+    chart = billboard.ChartData("billboard-global-200", date)
+    return chart
 
 ## Returns the artist and its related data of a search on Spotify 
 def retrieve_artist_data(artist_name):
     results = sp.search(q = artist_name, limit=3, type ='artist') ## object
     
-    result = results['artists']['items']
-    if len(result) == 0:
+    spotify_item = results['artists']['items']
+
+    if len(spotify_item) == 0:
         return 'None'
+
     else: 
-        return result 
+        return spotify_item[0]
 
-## Returns the final data object that is used to populate the database
-def get_chart_data():
-    charts = extract_artists()
-    charts = list(set(charts)) # to remove duplicate data
-    final_data = []
-    for chart in charts:
-        artist_data = retrieve_artist_data(chart.artist)
-        if artist_data != 'None':
-            dict_new = {}
-                
-            dict_new[]   
 
-            if artist_data[0]['external_urls']['spotify']:
-                dict_new['external_urls'] = artist_data[0]['external_urls']['spotify']
 
-            if artist_data[0]['followers']['total']:   
-                dict_new['followers'] = artist_data[0]['followers']['total']
+def populate_database(db: Session, date):
 
-            if artist_data[0]['genres']:
-                dict_new['genres'] = artist_data[0]['genres'][0]
+    ##extract chart for given date
+    chart = extract_chart(date)
 
-            if artist_data[0]['href']:
-                dict_new['href'] = artist_data[0]['href']
+    ##for every artist, retrieve spotify data
+    for entry in chart.entries:
+        artist_dict = retrieve_artist_data(entry.artist)
+        
+        if artist_dict != 'None':
 
-            if artist_data[0]['images']:
-                dict_new['images'] = artist_data[0]['images'][0]
+            try:
+                print(artist_dict['external_urls']['spotify'])
+                new_db_item = models.RawData({
+                    'artist_name': artist_dict['name'],
+                    'external_url': artist_dict['external_urls']['spotify'],
+                    'number_of_followers': artist_dict['followers']['total'],
+                    'genre': artist_dict['genres'][0],
+                    'image_url': artist_dict['images']['url'],
+                })
 
-            if artist_data[0]['name']:
-                dict_new['name'] = artist_data[0]['name']
+                db.add(new_db_item)
+                db.flush()
 
-            if artist_data[0]['popularity']:
-                dict_new['popularity'] = artist_data[0]['popularity']
-                
-            final_data.append(dict(dict_new))
-                    
-    return final_data
+            except:
+                pass
+    db.commit()
+
+    
