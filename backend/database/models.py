@@ -10,12 +10,12 @@ class Artist(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     external_urls = Column(String,index = True)
     followers = Column(Integer, index = True)
+    genres = Column(Integer,index = True)
     href = Column(String, index= True)
     images = Column(String,index = True)
     name = Column(String, index= True)
     popularity = Column(Integer, index= True)
-    type = Column(String, index=True)
-    uri = Column(String, index = True)
+    
     
     songs = relationship("Song", back_populates="artist")
     genre_artist = relationship("GenreArtist", back_populates="artist")

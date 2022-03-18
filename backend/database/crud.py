@@ -1,6 +1,6 @@
 from numpy import array
 from sqlalchemy.orm import Session
-
+from external import get_genres 
 from . import models, schemas
 
 def create_genre(db: Session, genre: schemas.Genre):
