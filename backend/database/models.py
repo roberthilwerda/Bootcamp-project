@@ -5,6 +5,18 @@ from .database import Base
 
 import uuid
 
+class Raw_data(Base):
+    __tablename__ = 'raw_data'
+    id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)
+    external_urls = Column(String,index = True)
+    followers = Column(Integer, index = True)
+    genres = Column(Integer,index = True)
+    href = Column(String, index= True)
+    images = Column(String,index = True)
+    name = Column(String, index= True)
+    popularity = Column(Integer, index= True)
+
+
 class Artist(Base):
     __tablename__ = 'artist'
     id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)

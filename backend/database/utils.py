@@ -2,6 +2,7 @@ import billboard
 from numpy import NaN 
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
+from datetime import datetime, timedelta
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_id="737f07244f3e435d9a3485e71acdceb7", client_secret="a49eef30bab647e8aa36e4c20c4835e3"))
@@ -11,8 +12,23 @@ date = "2021-04-04"
 
 ## Returns an array of all artists in the Billboard Global 200 for a given date
 def extract_artists():
-    charts = billboard.ChartData("billboard-global-200", date)
-    return [chart.artist for chart in charts]
+    main_billboard = []
+    billresults = []
+    current_date = datetime.strptime('2010/01/01', '%Y/%m/%d')
+    end_date = datetime.strptime('2021/12/31', '%Y/%m/%d')
+    delta = timedelta(days=30)
+    while current_date < end_date:
+        ds = current_date.strftime('%Y-%m-%d')
+        print(f'Fetching chart for {ds}')
+        for ce in billboard.ChartData('billboard-200', date=ds):
+            billresults.append([ce.artist])
+        current_date += delta
+    for values in billresults:
+        main_billboard.extend(values)
+    return main_billboard
+
+print(len(extract_artists()))
+
 
 ## Returns the artist and its related data of a search on Spotify 
 def retrieve_artist_data(artist_name):
@@ -22,7 +38,8 @@ def retrieve_artist_data(artist_name):
     if len(result) == 0:
         return 'None'
     else: 
-        return result 
+        return result
+
 
 ## Returns the final data object that is used to populate the database
 def get_chart_data():
@@ -98,3 +115,7 @@ def get_chart_data():
         final_data.append(dict(dict_new))
                 
     return final_data
+
+
+
+     

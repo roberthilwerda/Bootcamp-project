@@ -1,8 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Optional
 from pydantic import BaseModel
-import bboard
-import spotipyapi
 import json
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -58,5 +56,16 @@ def get_all_genres(db: Session = Depends(get_db)):
 
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
+    data= utils.get_chart_data()
+    for item in data: 
+        entry = models.Raw_data(
+          external_urls = item[]
+    followers = 
+    genres = 
+    href = 
+    images = 
+    name = 
+    popularity =  
+        )
     return crud.populate_database(db=db)
 

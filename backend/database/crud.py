@@ -3,6 +3,12 @@ from sqlalchemy.orm import Session
 from . import utils
 from . import models, schemas
 
+def create_rawdata(db: Session, raw_data_entry: models.Raw_data):
+    db.add(raw_data_entry)
+    db.commit()
+    db.refresh(raw_data_entry)
+    return raw_data_entry
+
 def create_genre(db: Session, genre: schemas.Genre):
     db_item = models.Genre(name=genre.name) ## create Genre instance with your data
     db.add(db_item) 
