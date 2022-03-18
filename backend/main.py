@@ -1,7 +1,12 @@
 from fastapi import FastAPI, Depends, HTTPException
+from typing import Optional
+from pydantic import BaseModel
+# import bboard
+# import spotipyapi
+import json
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from database import crud, models, schemas
+from database import crud, models, schemas, utils
 from database.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
@@ -31,11 +36,7 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-def get_all_genres(db: Session = Depends(get_db)):
-    return crud.get_all_genres(db=db)
-
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
-    return crud.populate_database(db=db)
+    return utils.populate_database(db=db, date="2020-09-08")
 

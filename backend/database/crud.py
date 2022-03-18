@@ -39,18 +39,4 @@ def get_genre(db: Session):
     pass
 
 
-def populate_database(db: Session):
-    # retrieve object from davids function
-    objects = utils.get_chart_data()  # array of objects
-    genres = []
 
-    # print(objects)
-
-    for object in objects:
-        try:
-            genres.append(
-                {"Name": object["name"], "Genre": object['genres'], "Popularity Index": object['popularity']})
-        except:
-            pass
-
-    return genres
