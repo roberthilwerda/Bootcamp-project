@@ -1,16 +1,13 @@
 from numpy import array
 from sqlalchemy.orm import Session
-from . import utils
 from . import models, schemas
 
 
-def create_genre(db: Session, genre: schemas.Genre):
+def create_genre(db: Session, genre: models.Genre):
     # create Genre instance with your data
-    db_item = models.Genre(name=genre.name)
-    db.add(db_item)
+    db.add(genre)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(genre)
 
 
 def update_genres(db: Session):
@@ -32,7 +29,7 @@ def update_genres(db: Session):
 
 def get_all_genres(db: Session):
     genres = db.query(models.Genre).all()
-    return genres
+    return [str(genre) for genre in genres]
 
 
 def create_raw_data(db:Session, item):
