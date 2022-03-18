@@ -1,3 +1,4 @@
+from msilib import schema
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Optional
 from pydantic import BaseModel
@@ -37,6 +38,15 @@ app.add_middleware(
 
 @app.get("/secret_update_page")
 def update(db: Session = Depends(get_db)):
+    
+
+@app.get("/")
+def get_all_genres(db: Session = Depends(get_db), response_model=schemas.Genre):
+
+    return crud.get_all_genres(db=db)
+
+@app.get("/populate_database")
+def populate_database(db: Session = Depends(get_db)):
     chart_data = utils.get_chart_data()
     for item in chart_data:
         genre = models.Genre(item["genres"])
@@ -49,14 +59,5 @@ def update(db: Session = Depends(get_db)):
             #type 
             #uri I think these properties are not nessecery?
         )
-        song = models.Song
-        song = models.GenreArtist
-
-@app.get("/")
-def get_all_genres(db: Session = Depends(get_db)):
-    return crud.get_all_genres(db=db)
-
-@app.get("/populate_database")
-def populate_database(db: Session = Depends(get_db)):
-    return crud.populate_database(db=db)
+        crud.create_artist(artist)
 

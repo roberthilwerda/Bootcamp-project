@@ -12,7 +12,7 @@ date = "2021-04-04"
 ## Returns an array of all artists in the Billboard Global 200 for a given date
 def extract_artists():
     charts = billboard.ChartData("billboard-global-200", date)
-    return [chart.artist for chart in charts]
+    return [chart for chart in charts]
 
 ## Returns the artist and its related data of a search on Spotify 
 def retrieve_artist_data(artist_name):
@@ -26,14 +26,16 @@ def retrieve_artist_data(artist_name):
 
 ## Returns the final data object that is used to populate the database
 def get_chart_data():
-    artists = extract_artists()
-    artists = list(set(artists)) # to remove duplicate data
+    charts = extract_artists()
+    charts = list(set(charts)) # to remove duplicate data
     final_data = []
-    for artist in artists:
-        artist_data = retrieve_artist_data(artist)
+    for chart in charts:
+        artist_data = retrieve_artist_data(chart.artist)
         if artist_data != 'None':
             dict_new = {}
                 
+            dict_new[]   
+
             if artist_data[0]['external_urls']['spotify']:
                 dict_new['external_urls'] = artist_data[0]['external_urls']['spotify']
 
