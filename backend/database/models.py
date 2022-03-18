@@ -45,11 +45,12 @@ class Genre(Base):
     # genre = relationship("Genre", back_populates="genre_artist")
     # artist = relationship("Artist", back_populates="genre_artist")
 
-# class RawData(Base):
-#     __tablename__ = 'raw_data'
-#     id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)
-#     artist_name = Column(String,index = True)
-#     external_url = Column(String,index = True)
-#     number_of_followers = Column(Integer, index = True)
-#     genre = Column(Integer,index = True)
-#     image_url = Column(String,index = True)
+class RawData(Base):
+    __tablename__ = 'raw_data'
+    id = Column(Integer, primary_key=True)
+    date = Column(String)
+    artist_name = Column(String)
+    external_url = Column(String)
+    number_of_followers = Column(Integer)
+    genre = Column(String)
+    image_url = Column(String)
