@@ -88,12 +88,7 @@ const data = {
 
 const config = {
   responsive: true,
-  plugins: {
-    title: {
-      display: true,
-      text: "Chart with Tick Configuration",
-    },
-  },
+
   scales: {
     x: {
       ticks: {
@@ -115,6 +110,7 @@ const config = {
         borderColor: 'wheat',
       }
     },
+
   },
 };
 
