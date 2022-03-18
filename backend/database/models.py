@@ -57,3 +57,5 @@ class RawData(Base):
 
 
 
+    song = relationship("Song", back_populates="song_artist")
+    artist = relationship("Artist", back_populates="song_artist")
