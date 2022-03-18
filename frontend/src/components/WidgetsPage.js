@@ -2,6 +2,7 @@ import "./WidgetsPage.css";
 import StatsByGenre from "../widgets/StatsByGenre";
 import GenrePage from "./GenrePage";
 import { useState } from "react";
+import ArtistSlider from "../widgets/ArtistSlider";
 
 const WidgetsPage = () => {
   let trendingGenres = ["Jazz", "Rock", "Blues", "Classical", "EDM", "Reggae"];
@@ -9,7 +10,7 @@ const WidgetsPage = () => {
   let [apiData, setApiData] = useState("Click to fetch");
 
   async function fetchGenresHandler() {
-    const response = await fetch("http://localhost:8000/get_all_genres");
+    const response = await fetch("http://localhost:8000/");
     const data = await response.json();
 
     console.log(data);
@@ -19,19 +20,23 @@ const WidgetsPage = () => {
   const onClickHandler = (genre) => {
     setPageContent(
       <div className="genre_page__wrapper">
+        <div className="genre_page__title-area">
+          <div className="genre_page__back">
+            <div className="genre_page__back-icon" onClick={goBackClickHandler}>
+              🡨
+            </div>
+          </div>
 
-        <div className="genre_page__back" onClick={goBackClickHandler}>
-          <div>ᐸ</div>
-        </div>
-
-        <div className="genre_page__title">
-          <div>{genre}</div>
+          <div className="genre_page__title">
+            <h1>{genre} STATS</h1>
+          </div>
         </div>
 
         <div className="genre_page__body">
           <GenrePage genre={genre}></GenrePage>
         </div>
 
+        <ArtistSlider />
       </div>
     );
   };
@@ -81,7 +86,6 @@ const WidgetsPage = () => {
       <div className="chart__col">Chart here</div>
 
       <button onClick={fetchGenresHandler}>Click here</button>
-      <div>{apiData}</div>
     </div>
   );
 

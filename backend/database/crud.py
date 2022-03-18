@@ -1,6 +1,6 @@
 from numpy import array
 from sqlalchemy.orm import Session
-from external import get_genres 
+from . import utils
 from . import models, schemas
 
 def create_genre(db: Session, genre: schemas.Genre):
@@ -32,3 +32,20 @@ def get_all_genres(db: Session):
 
 def get_genre(db: Session):
     pass
+
+def populate_database(db: Session):
+    ## retrieve object from davids function
+    objects = utils.get_chart_data() ## array of objects
+    genres = []
+
+    # print(objects)
+
+    for object in objects:
+        try:
+            genres.append(object['genres'])
+        except:
+            pass
+    
+    return genres
+    
+    
