@@ -1,6 +1,8 @@
+from msilib import schema
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Optional
 from pydantic import BaseModel
+import uvicorn
 # import bboard
 # import spotipyapi
 import json
@@ -45,3 +47,7 @@ def populate_database_manual(date: str, db: Session = Depends(get_db)):
     return utils.populate_database(db=db, date=date)
 
 
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000)
