@@ -46,7 +46,6 @@ def get_genres(db: Session = Depends(get_db)):
     genres = crud.get_all_genres(db)
     return [{"name": genre} for genre in genres]
 
-
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
     return utils.populate_database(db=db)
@@ -54,7 +53,6 @@ def populate_database(db: Session = Depends(get_db)):
 @app.get("/populate_database_manual/{date}")
 def populate_database_manual(date: str, db: Session = Depends(get_db)):
     return utils.populate_database(db=db, date=date)
-
 
 
 
