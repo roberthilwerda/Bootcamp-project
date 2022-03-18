@@ -26,6 +26,40 @@ def retrieve_artist_data(artist_name):
 
 ## Returns the final data object that is used to populate the database
 def get_chart_data():
+    artists = extract_artists()
+    artists = list(set(artists)) # to remove duplicate data
+    final_data = []
+    for artist in artists:
+        artist_data = retrieve_artist_data(artist)
+        if artist_data != 'None':
+            dict_new = {}
+                
+            if artist_data[0]['external_urls']['spotify']:
+                dict_new['external_urls'] = artist_data[0]['external_urls']['spotify']
+
+            if artist_data[0]['followers']['total']:   
+                dict_new['followers'] = artist_data[0]['followers']['total']
+
+            if artist_data[0]['genres']:
+                dict_new['genres'] = artist_data[0]['genres'][0]
+
+            if artist_data[0]['href']:
+                dict_new['href'] = artist_data[0]['href']
+
+            if artist_data[0]['images']:
+                dict_new['images'] = artist_data[0]['images'][0]
+
+            if artist_data[0]['name']:
+                dict_new['name'] = artist_data[0]['name']
+
+            if artist_data[0]['popularity']:
+                dict_new['popularity'] = artist_data[0]['popularity']
+                
+            final_data.append(dict(dict_new))
+                    
+    return final_data
+
+def get_chart_data():
     artists = extract_artists() ## extract artists from billboard
     artists_data = [retrieve_artist_data(artist) for artist in artists] ## array of objects from Spotify
     artists_data_clean = [] ## remove none values
@@ -36,7 +70,7 @@ def get_chart_data():
     for artist in artists_data:
         if artist != 'None':
             artists_data_clean.append(artist)
-    
+
     for artist in artists_data_clean:
         dict_new = {}
             
@@ -61,6 +95,6 @@ def get_chart_data():
         if artist[0]['popularity']:
             dict_new['popularity'] = artist[0]['popularity']
             
-        final_data.append(dict_new)
+        final_data.append(dict(dict_new))
                 
     return final_data
