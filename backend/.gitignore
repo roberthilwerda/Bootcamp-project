@@ -1,1 +1,11 @@
-backend-env
+database
+venv
+
+/database/
+/venv/
+
+/database
+/venv
+
+database/
+venv/
