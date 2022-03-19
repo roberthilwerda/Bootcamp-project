@@ -1,7 +1,5 @@
 import "./WidgetsPage.css";
 import StatsByGenre from "../widgets/StatsByGenre";
-
-import StatsByParam from "../widgets/StatsByParam";
 import ChartGenre from "../widgets/ChartGenre";
 import GenrePage from "./GenrePage";
 import { useState } from "react";
@@ -51,50 +49,62 @@ const WidgetsPage = () => {
   const initialPageContent = (
     <div className="widgetspage__wrapper">
       <div className="widgetspage__col">
-        <div style={{ fontSize: 30 }} className="widgetspage__title">
-          Most trending genres
+
+        <div style={{ fontSize: 20 }} className="widgetspage__title">
+          <p>Most popular genres</p>
         </div>
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"pop"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"pop"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
-        <StatsByGenre
-          genre={"jazz"}
-          filter={`some genre`}
-          onClickHandler={onClickHandler}
-        />
+
+        <div className="widgetspage__body">
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"pop"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"pop"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+          <StatsByGenre
+            genre={"jazz"}
+            filter={`some genre`}
+            onClickHandler={onClickHandler}
+          />
+        </div>
       </div>
 
-
       <div className="chart__col">
-        <ChartGenre/>
+        <div style={{ fontSize: 20 }} className="widgetspage__title">
+          <p>Trends</p>
         </div>
-      <button onClick={fetchGenresHandler}> Click here</button>
-      <div>{apiData}</div>
-      <div className="chart__col">Chart here</div>
-      <button onClick={fetchGenresHandler}>Click here</button>
 
+        <div className="chart__body">
+
+          <div className="chart__item">
+            <ChartGenre />
+          </div>
+
+          <div className="chart__item">
+            <ChartGenre />
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 

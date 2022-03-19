@@ -1,6 +1,8 @@
+from msilib import schema
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Optional
 from pydantic import BaseModel
+import uvicorn
 # import bboard
 # import spotipyapi
 import json
@@ -8,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas, utils
 from database.database import SessionLocal, engine
+from datetime import datetime
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -35,8 +38,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
-    return utils.populate_database(db=db, date="2020-09-08")
+    return utils.populate_database(db=db)
 
+@app.get("/populate_database_manual/{date}")
+def populate_database_manual(date: str, db: Session = Depends(get_db)):
+    return utils.populate_database(db=db, date=date)
+
+
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000)
