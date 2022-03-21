@@ -38,6 +38,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("./{genre}"):
+def get_genre_page(genre: str):
+    return genre results
+
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
     return utils.populate_database(db=db)
@@ -46,9 +50,12 @@ def populate_database(db: Session = Depends(get_db)):
 def populate_database_manual(date: str, db: Session = Depends(get_db)):
     return utils.populate_database(db=db, date=date)
 
+<<<<<<< HEAD
 @app.get("./populate_database_all")
 def populate_database_all(db: Session = Depends(get_db)):
     return utils.populate_database_all(db=db)
+=======
+>>>>>>> d683b790ffcf4b4967b09ea4ef8ad03ec6cca44d
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)

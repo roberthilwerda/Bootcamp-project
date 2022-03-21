@@ -55,6 +55,10 @@ def populate_database(db: Session, date=datetime.today().strftime('%Y-%m-%d')):
             print("Saving " + str(new_db_item) + "to database")
             crud.create_raw_data(db, new_db_item)
 
+def populate_database_all(db: Session):
+    ## function that returns a list of the past 10 years' months from the day of today
+    ["01-03-2011",  "01-03-2011", ]
+     
 
 
        
