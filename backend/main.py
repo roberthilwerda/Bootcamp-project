@@ -46,8 +46,9 @@ def populate_database(db: Session = Depends(get_db)):
 def populate_database_manual(date: str, db: Session = Depends(get_db)):
     return utils.populate_database(db=db, date=date)
 
-
-
+@app.get("/populate_database_all")
+def populate_database_all(db: Session = Depends(get_db)):
+    return utils.populate_database_all(db=db)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)

@@ -4,6 +4,7 @@ from typing import Optional
 
 class Genre(BaseModel):
     name: str
+    
 
 
 class GenreArtist(BaseModel):

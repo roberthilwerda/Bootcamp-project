@@ -148,7 +148,13 @@ h3 {
   height: 32rem;
 }
 
-@media (min-width: 200px) and (max-width: 1000px) {
+@media (min-width: 1000px) and (max-width: 1400px) {
+  .widgetspage__col {
+    width:100%;
+  }
+}
+
+@media (min-width: 200px) and (max-width: 1100px) {
   .widgetspage__wrapper {
     justify-content: center;
   }
@@ -156,6 +162,10 @@ h3 {
   .widgetspage__col {
     width: 100%;
     /* border: 2px solid red; */
+  }
+
+  .chart__col {
+    width: 100%;
   }
 
   .chart__col {
