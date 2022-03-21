@@ -38,13 +38,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("./{genre}"):
-def get_genre_page(genre: str):
-    return genre results
+@app.get("/{genre}")
+def genre(genre: str, db: Session = Depends(get_db)):
+    entries = db.query(models.Artist).join(models.Genre)
+    ## get artists with that genre
+    ## sort on popularity
+    ## return list of artists
 
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
-    return utils.populate_database(db=db)
+    return utils.populate_database_all(db=db)
 
 @app.get("/populate_database_manual/{date}")
 def populate_database_manual(date: str, db: Session = Depends(get_db)):

@@ -55,6 +55,8 @@ def populate_database(db: Session, date=datetime.today().strftime('%Y-%m-%d')):
             print("Saving " + str(new_db_item) + "to database")
             crud.create_raw_data(db, new_db_item)
 
+    ## Build the main tables
+
 def populate_database_all(db: Session):
     for year in range(10):
         for month in range(1,13,1):

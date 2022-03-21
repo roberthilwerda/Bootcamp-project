@@ -1,3 +1,4 @@
+from folium import ColorLine
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float
 from sqlalchemy.orm import relationship
@@ -5,19 +6,20 @@ from .database import Base
 
 import uuid
 
-# class Artist(Base):
-#     __tablename__ = 'artist'
-#     id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)
-#     external_urls = Column(String,index = True)
-#     followers = Column(Integer, index = True)
-#     href = Column(String, index= True)
-#     name = Column(String, index= True)
-#     popularity = Column(Integer, index= True)
-#     type = Column(String, index=True)
-#     uri = Column(String, index = True)
+class Artist(Base):
+    __tablename__ = 'artist'
+    id = Column(Integer, primary_key=True, index=True, default=uuid.uuid4)
+    name = Column(String, index=True)
+    # external_urls = Column(String,index = True)
+    # followers = Column(Integer, index = True)
+    # href = Column(String, index= True)
+    # name = Column(String, index= True)
+    # popularity = Column(Integer, index= True)
+    # type = Column(String, index=True)
+    # uri = Column(String, index = True)
     
-#     songs = relationship("Song", back_populates="artist")
-#     genre_artist = relationship("GenreArtist", back_populates="artist")
+    # songs = relationship("Song", back_populates="artist")
+    # genre_artist = relationship("GenreArtist", back_populates="artist")
 
 
 class Genre(Base):
