@@ -3,30 +3,17 @@ from numpy import NaN
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
 from sqlalchemy.orm import Session
-# from . import models, crud
+from . import models, crud
 from datetime import datetime, timedelta
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-    client_id="7094d2e6395648caa6183d9099a2bca6", client_secret="65f8b7ed69b94a7bbf02b4c91cb71617"))
+    client_id="737f07244f3e435d9a3485e71acdceb7", client_secret="4f590cc8caec4cbcbc4c88d7febcbe31"))
 
 
 ## Returns an array of all artists in the Billboard Global 200 for a given date
-def extract_chart():
-    main_billboard = []
-    billresults = []
-    current_date = datetime.strptime('2010/01/01', '%Y/%m/%d')
-    end_date = datetime.strptime('2011/12/31', '%Y/%m/%d')
-    delta = timedelta(days=30)
-    while current_date < end_date:
-        ds = current_date.strftime('%Y-%m-%d')
-        print(f'Fetching chart for {ds}')
-        for ce in billboard.ChartData('billboard-200', date=ds):
-            billresults.append([ce.artist])
-        current_date += delta
-    for values in billresults:
-        main_billboard.extend(values)
-    return main_billboard
-print(extract_chart())
+def extract_chart(date):
+    chart = billboard.ChartData("billboard-200", date)
+    return chart
 
 
 # ## Returns the artist and its related data of a search on Spotify 
@@ -51,7 +38,23 @@ print(extract_chart())
 def populate_database(db: Session, date=datetime.today().strftime('%Y-%m-%d')):
     ##extract chart for given date
     chart = extract_chart(date)
-    print(chart.date)
+    print(sp.search(q = "Queen", type ='artist'))
+  
+    ##for every artist, retrieve spotify data
+    for entry in chart.entries:
+        
+        artist_dict = retrieve_artist_data(entry.artist)
+       
+        if artist_dict != 'None' and artist_dict['genres'] and artist_dict['images'][0]['url']:
+ 
+            new_db_item = models.RawData(
+                artist_name = artist_dict['name'],
+                date = date,
+                external_url =  artist_dict['external_urls']['spotify'],
+                number_of_followers = artist_dict['followers']['total'],
+                genre = artist_dict['genres'][0],
+                image_url = artist_dict['images'][0]['url'],
+                )
 
   
 #     ##for every artist, retrieve spotify data
@@ -82,7 +85,8 @@ def populate_database_all(db: Session):
             populate_database(db, date)
 
 
-       
+def get_all(db: Session):
+    return db.query(models.RawData).all()
 
                
 

@@ -22,22 +22,23 @@ const ArtistSlider = (props) => {
     { id: 6, name: "Artist-6", image_ref: "" },
   ];
 
-  const img = "https://i.scdn.co/image/ab6761610000e5eb82a5d58059f81867b871d8b6"
+  const img =
+    "https://i.scdn.co/image/ab6761610000e5eb82a5d58059f81867b871d8b6";
 
   return (
-    <div onClick={() => {}} className="artist_slider__wrapper">
-      {artists.map((artist) => {
-        return (
-          <div className="artist_card" key={artist.id}>
-    
-            <img
-              alt=""
-              className="artist_image"
-              src={img}
-            ></img>
-          </div>
-        );
-      })}
+    <div>
+      <div className="artist_slider__redirect">
+        Click on an artist to view in Spotify
+      </div>
+      <div onClick={() => {}} className="artist_slider__wrapper">
+        {artists.map((artist) => {
+          return (
+            <div className="artist_card" key={artist.id}>
+              <img alt="" className="artist_image" src={img}></img>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
