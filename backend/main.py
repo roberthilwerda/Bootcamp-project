@@ -38,6 +38,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("./{genre}"):
+def get_genre_page(genre: str):
+    return genre results
+
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
     return utils.populate_database(db=db)
@@ -45,7 +49,6 @@ def populate_database(db: Session = Depends(get_db)):
 @app.get("/populate_database_manual/{date}")
 def populate_database_manual(date: str, db: Session = Depends(get_db)):
     return utils.populate_database(db=db, date=date)
-
 
 
 if __name__ == "__main__":

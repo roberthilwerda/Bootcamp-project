@@ -55,7 +55,13 @@ def populate_database(db: Session, date=datetime.today().strftime('%Y-%m-%d')):
             print("Saving " + str(new_db_item) + "to database")
             crud.create_raw_data(db, new_db_item)
 
-
+def populate_database_all(db: Session):
+    for year in range(10):
+        for month in range(1,13,1):
+            if month < 10:
+                month = f"0{month}"
+            date = f"01-{month}-{2012+year}"
+            populate_database(db, date)
 
        
 
