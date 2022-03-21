@@ -46,9 +46,13 @@ print(extract_chart())
 
 
 
-# def populate_database(db: Session, date=datetime.today().strftime('%Y-%m-%d')):
-#     ##extract chart for given date
-#     chart = extract_chart(date)
+
+
+def populate_database(db: Session, date=datetime.today().strftime('%Y-%m-%d')):
+    ##extract chart for given date
+    chart = extract_chart(date)
+    print(chart.date)
+
   
 #     ##for every artist, retrieve spotify data
 #     for entry in chart.entries:
@@ -69,6 +73,13 @@ print(extract_chart())
 #             print("Saving " + str(new_db_item) + "to database")
 #             crud.create_raw_data(db, new_db_item)
 
+def populate_database_all(db: Session):
+    for year in range(1):
+        for month in range(1,13,1):
+            if month < 10:
+                month = f"0{month}"
+            date = f"{2021+year}-{month}-01"
+            populate_database(db, date)
 
 
        

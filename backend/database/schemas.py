@@ -6,6 +6,7 @@ from backend.database.database import Base
 
 class Genre(BaseModel):
     name: str
+    
 
 
 class GenreArtist(BaseModel):
