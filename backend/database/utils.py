@@ -7,12 +7,12 @@ from . import models, crud
 from datetime import datetime
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-    client_id="7094d2e6395648caa6183d9099a2bca6", client_secret="65f8b7ed69b94a7bbf02b4c91cb71617"))
+    client_id="737f07244f3e435d9a3485e71acdceb7", client_secret="4f590cc8caec4cbcbc4c88d7febcbe31"))
 
 
 ## Returns an array of all artists in the Billboard Global 200 for a given date
 def extract_chart(date):
-    chart = billboard.ChartData("billboard-global-200", date)
+    chart = billboard.ChartData("billboard-200", date)
     return chart
 
 ## Returns the artist and its related data of a search on Spotify 
@@ -35,13 +35,13 @@ def retrieve_artist_data(artist_name):
 def populate_database(db: Session, date=datetime.today().strftime('%Y-%m-%d')):
     ##extract chart for given date
     chart = extract_chart(date)
-    print(chart.date)
+    print(sp.search(q = "Queen", type ='artist'))
   
     ##for every artist, retrieve spotify data
     for entry in chart.entries:
         
         artist_dict = retrieve_artist_data(entry.artist)
-        
+       
         if artist_dict != 'None' and artist_dict['genres'] and artist_dict['images'][0]['url']:
  
             new_db_item = models.RawData(
@@ -65,7 +65,8 @@ def populate_database_all(db: Session):
             populate_database(db, date)
 
 
-       
+def get_all(db: Session):
+    return db.query(models.RawData).all()
 
                
 

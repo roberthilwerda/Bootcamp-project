@@ -22,6 +22,8 @@ const WidgetsPage = () => {
     console.log(data);
   }
 
+  fetchGenresHandler();
+
   // function that sets the pagecontent to the stats-per-genre page
   const onClickHandler = (genre) => {
     setPageContent(
