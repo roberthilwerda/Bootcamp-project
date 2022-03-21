@@ -1,11 +1,11 @@
 .genre__item {
-  width: 400px;
-  margin: 2rem 1rem;
-  height: 210px;
+  width: 45%;
+  margin: 1rem 1rem;
+  height: 14rem;
   border-radius: 1rem;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
   overflow: hidden;
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.637);
 }
 
 .genre__item:hover {
@@ -23,7 +23,8 @@
 }
 
 .genre__image {
-  height: 100%;
+  width: 100%;
+  object-fit: cover;
   opacity: 0.3;
   overflow: hidden;
 }
@@ -34,22 +35,43 @@
   overflow: hidden;
   z-index: 2;
   transition: transform 2s;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .genre__title {
   position: relative;
-  bottom: 2.8rem;
+  height: 20%;
+  padding: 1rem 1rem;
+  bottom: 27%;
   color: wheat;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   z-index: 2;
-  padding: 0.50rem;
-  border-top: 2px solid wheat;
+  padding: 0.5rem 1.5rem;
+  border-top: 1px solid rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.397);
 }
 
 .genre__title:hover {
   background-color: rgba(0, 0, 0, 0.397);
+}
+
+.genre__title_genre {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.click_to_view {
+  background-color: black;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
+}
+
+@media (min-width: 300px) and (max-width: 1100px) {
+  .genre__item {
+    width: 500px;
+  }
 }

@@ -38,14 +38,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/", response_model=list[schemas.Genre])
-def get_genres(db: Session = Depends(get_db)):
-    obj = models.Genre(name = "pop")
-    print(obj)
-    crud.create_genre(db, obj)
-    genres = crud.get_all_genres(db)
-    return [{"name": genre} for genre in genres]
-
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
     return utils.populate_database(db=db)

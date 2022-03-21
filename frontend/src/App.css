@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+
 .App {
   text-align: center;
 }
 
 .main {
   background-color: rgba(245, 222, 179, 0.301);
-  font-family:'Candara', sans-serif;
+  font-family:'Raleway', sans-serif;
   min-height: 100vh;
 }
 
