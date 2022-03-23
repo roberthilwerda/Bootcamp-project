@@ -15,6 +15,8 @@ const WidgetsPage = () => {
     { id: 6, genre: "Reggae", imageUrl: "https://i.scdn.co/image/ab6761610000e5ebdec41838906c58af1c29c9da"},
   ]; //replace with dynamic DB fetch later
 
+  
+
   async function fetchGenresHandler() {
     const response = await fetch("http://localhost:8000/");
     const data = await response.json();
@@ -22,7 +24,9 @@ const WidgetsPage = () => {
     console.log(data);
   }
 
-  fetchGenresHandler();
+  const genresTest = fetchGenresHandler();
+  
+  console.log(genresTest)
 
   // function that sets the pagecontent to the stats-per-genre page
   const onClickHandler = (genre) => {
