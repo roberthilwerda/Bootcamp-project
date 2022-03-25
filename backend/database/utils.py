@@ -3,8 +3,10 @@ from numpy import NaN
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
 from sqlalchemy.orm import Session
+from sqlalchemy import update
 from . import models, crud
 from datetime import datetime, timedelta
+import numpy as np
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_id="737f07244f3e435d9a3485e71acdceb7", client_secret="a49eef30bab647e8aa36e4c20c4835e3"))
@@ -63,7 +65,47 @@ def populate_database_all(db: Session):
 
 
 def get_all(db: Session):
+    ## function that transforms the manipulated Data table to pandas dataframe
+    ## function that calculates the trend, based on growth compared to previous month
     return db.query(models.ManipulatedData).filter(models.ManipulatedData.date == "2017-01-01").all()
+
+
+def get_image(db, genre):
+    genre_list = db.query(models.RawData).filter(models.RawData.genre == genre).all()
+    return(genre_list[0].image_url)
+
+def save_genres(db):
+    genre_query = db.query(models.ManipulatedData.genre).all() ## returns a list of all rows, displaying the genre
+    all_genres_array = np.unique(genre_query) ## returns a list of the unique genres
+
+    for index, genre in enumerate(all_genres_array):
+        new_db_item = models.Genre(
+        id = index,
+        genre = genre,
+        image_url = get_image(db, genre),
+        )
+        print("Saving " + str(new_db_item) + "to database")
+        crud.create_genre(db, new_db_item)
+ 
+def save_images(db):
+
+    all_data_query = db.query(models.ManipulatedData).all()
+    model = models.ManipulatedData
+    
+    for index, x in enumerate(all_data_query):
+
+        image_url = db.query(models.Genre.image_url).where(models.Genre.genre == x.genre).all()[0]
+        
+        db.execute(update(model).where(model.id == x.id).values({'image_url' : str(image_url[0])}))
+        db.commit()
+
+
+
+
+
+
+   
+
 
 
 

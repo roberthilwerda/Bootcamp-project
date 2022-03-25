@@ -22,6 +22,14 @@ class ManipulatedData(Base):
     __tablename__ = 'manipulated_data'
     id = Column(Integer, primary_key=True)
     date = Column(String)
-    genre = Column(String)
+    genre = Column(String, ForeignKey("genre.genre"))
     rank_aggregate = Column(Float)
     count = Column(BigInteger)
+    image_url = Column(String)
+
+class Genre(Base):
+    __tablename__ = 'genre'
+    id = Column(Integer, primary_key=True)
+    genre = Column(String)
+    image_url = Column(String)
+

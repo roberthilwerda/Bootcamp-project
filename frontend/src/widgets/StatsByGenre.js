@@ -24,7 +24,7 @@ const StatsByGenre = (props) => {
       </div>
 
       <div className="genre__title">
-        <div className="genre__title_genre">{ranking}: {genre} </div>
+        <div className="genre__title_genre">{ranking}. {genre} </div>
         <div className="click_to_view">Click to view stats</div>
       </div>
     </div>

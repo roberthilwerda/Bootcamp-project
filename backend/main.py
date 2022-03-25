@@ -54,5 +54,16 @@ def populate_database_manual(date: str, db: Session = Depends(get_db)):
 def populate_database_all(db: Session = Depends(get_db)):
     return utils.populate_database_all(db=db)
 
+@app.get("/save_genres")
+def save_genres(db: Session = Depends(get_db)):
+    return utils.save_genres(db=db)
+
+@app.get("/save_images")
+def save_images(db: Session = Depends(get_db)):
+    return utils.save_images(db=db)
+
+    
+
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="localhost", port=8000)
+
