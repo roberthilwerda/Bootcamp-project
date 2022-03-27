@@ -22,102 +22,203 @@ ChartJS.register(
   Legend
 );
 
-const data = {
-  labels: [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ],
-  datasets: [
-    {
-      label: "Pop",
-      fill: true,
-      lineTension: 0.5,
-      backgroundColor: "rgba(192,75,192,1)",
-      borderColor: "rgba(192,75,192,1)",
-      borderWidth: 2,
-      data: [88, 84, 85, 75, 93, 88, 84, 85, 75, 93, 88, 84],
-    },
-    {
-      label: "Rock",
-      fill: false,
-      lineTension: 0.5,
-      backgroundColor: "rgba(192,192,75,1)",
-      borderColor: "rgba(192,192,75,1)",
-      borderWidth: 2,
-      data: [35, 45, 55, 65, 75, 35, 45, 55, 65, 75, 35, 45],
-    },
-    {
-      label: "Latin",
-      fill: false,
-      lineTension: 0.5,
-      backgroundColor: "rgba(120,120,120,1)",
-      borderColor: "rgba(120,120,120,1)",
-      borderWidth: 2,
-      data: [15, 35, 59, 81, 56, 15, 35, 59, 81, 56, 15, 35],
-    },
-    {
-      label: "R&B",
-      fill: false,
-      lineTension: 0.5,
-      backgroundColor: "rgba(75,192,192,1)",
-      borderColor: "rgba(75,192,192,1)",
-      borderWidth: 2,
-      data: [65, 59, 80, 81, 56, 65, 59, 80, 81, 56, 65, 59],
-    },
-    {
-      label: "Jazz",
-      fill: false,
-      lineTension: 0.5,
-      backgroundColor: "rgba(192,192,192,1)",
-      borderColor: "rgba(192,192,192,1)",
-      borderWidth: 2,
-      data: [10, 12, 13, 9, 11, 10, 12, 13, 9, 11, 10, 12],
-    },
-  ],
-};
+const labels = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
-const config = {
-  responsive: true,
+function capitalize(string) {
+  try {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  } catch {
+    return string;
+  }
+}
 
-  scales: {
-    x: {
-      ticks: {
-        color: "wheat",
-      },
-      grid: {
-        color: "rgba(245,222,179,0.4)",
-        borderColor: "wheat"
+const transformDataToArray = (mode, data) => {
+  let dataArray = [];
+  let dates = [
+    "2021-01-01",
+    "2021-02-01",
+    "2021-03-01",
+    "2021-04-01",
+    "2021-05-01",
+    "2021-06-01",
+    "2021-07-01",
+    "2021-08-01",
+    "2021-09-01",
+    "2021-10-01",
+    "2021-11-01",
+    "2021-12-01",
+  ];
+
+  if (mode === "single") {
+    for (let i = 0; i < dates.length; i++) {
+      try {
+        dataArray[i] = data.filter(
+          (months) => months.date === dates[i]
+        )[0].rank_aggregate;
+      } catch (error) {
+        dataArray[i] = 0;
       }
-    },
+    }
+  } else {
+    for (const genres of data) {
+      let dataPerGenreArray = []; // 1 array of 6 arrays
 
+      for (const [i, date] of dates.entries()) {
+        // for each month
+       
+        if (genres.filter(genre => genre.date === date)[0] !== undefined) {
+          console.log(genres[i])
+          dataPerGenreArray[i] = genres.filter(genre => genre.date === date)[0].rank_aggregate;
+        } else {
+          // console.log(i)
+          dataPerGenreArray[i] = 0;
+        }
 
-    y: {
-      ticks: {
-        color: "wheat",
-      },
-      grid: {
-        color: "rgba(245,222,179,0.4)",
-        borderColor: 'wheat',
+        // console.log(dataPerGenreArray)
       }
-    },
 
-  },
+      dataArray.push(dataPerGenreArray);
+    }
+  }
+
+  return dataArray;
 };
 
 const ChartGenre = (props) => {
+  const allData = props.data;
+
+  let data;
+  if (props.mode === "single") {
+    data = {
+      labels: labels,
+      datasets: [
+        {
+          label: `Popularity index of ${capitalize(props.genre)}`,
+          fill: true,
+          lineTension: 0.5,
+          backgroundColor: "wheat",
+          borderColor: "wheat",
+          borderWidth: 2,
+          data: transformDataToArray("single", allData),
+        },
+      ],
+    };
+  } else {
+    console.log(allData);
+    data = {
+      labels: labels,
+      datasets: [
+        {
+          label: capitalize(props.genre[0]),
+          fill: true,
+          lineTension: 0.5,
+          backgroundColor: "goldenrod",
+          borderColor: "goldenrod",
+          borderWidth: 2,
+          data: transformDataToArray("multiple", allData)[0],
+        },
+        {
+          label: capitalize(props.genre[1]),
+          fill: false,
+          lineTension: 0.5,
+          backgroundColor: "silver",
+          borderColor: "silver",
+          borderWidth: 2,
+          data: transformDataToArray("multiple", allData)[1],
+        },
+        {
+          label: capitalize(props.genre[2]),
+          fill: false,
+          lineTension: 0.5,
+          backgroundColor: "brown",
+          borderColor: "brown",
+          borderWidth: 2,
+          data: transformDataToArray("multiple", allData)[2],
+        },
+        {
+          label: capitalize(props.genre[3]),
+          fill: false,
+          lineTension: 0.5,
+          backgroundColor: "rgba(75,192,192,1)",
+          borderColor: "rgba(75,192,192,1)",
+          borderWidth: 2,
+          data: transformDataToArray("multiple", allData)[3],
+        },
+        {
+          label: capitalize(props.genre[4]),
+          fill: false,
+          lineTension: 0.5,
+          backgroundColor: "rgba(192,192,192,1)",
+          borderColor: "rgba(192,192,192,1)",
+          borderWidth: 2,
+          data: transformDataToArray("multiple", allData)[4],
+        },
+        {
+          label: capitalize(props.genre[5]),
+          fill: false,
+          lineTension: 0.5,
+          backgroundColor: "rgba(101,56,192,1)",
+          borderColor: "rgba(101,56,192,1)",
+          borderWidth: 2,
+          data: transformDataToArray("multiple", allData)[5],
+        },
+      ],
+    };
+  }
+
+  const config = {
+    responsive: true,
+
+    scales: {
+      x: {
+        ticks: {
+          color: "wheat",
+        },
+        grid: {
+          color: "rgba(245,222,179,0.4)",
+          borderColor: "wheat",
+        },
+      },
+
+      y: {
+        ticks: {
+          color: "wheat",
+        },
+        grid: {
+          color: "rgba(245,222,179,0.4)",
+          borderColor: "wheat",
+        },
+      },
+    },
+  };
+
+  // const [allData, setAllData] = useState();
+
+  // useEffect(() => {
+  //   setAllData(props.data);
+  //   console.log(allData);
+  // }, [props.data, allData]);
+
   return (
-    <div className="chart__container">
-      <Line data={data} options={config} />
+    <div className="chart__wrapper">
+      <div className="chart__container">
+        <div className="chart__chart">
+          <Line data={data} options={config} />
+        </div>
+      </div>
     </div>
   );
 };
