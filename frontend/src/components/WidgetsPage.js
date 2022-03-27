@@ -53,8 +53,11 @@ const WidgetsPage = (props) => {
     let dataArray = [];
     const genres =  getGenresArray(filteredData);
     for(const genre of genres){
+
       dataArray.push(allData.filter(data => data.genre === genre && data.date.includes('2021')))
+    
     }
+    // console.log(dataArray)
     return dataArray
   }
 
@@ -110,7 +113,6 @@ const WidgetsPage = (props) => {
     );
   };
 
-  console.log(getDataArray(allData))
 
   if (props.showHomePage) {
     return showHomePageContent();
