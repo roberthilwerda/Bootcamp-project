@@ -67,7 +67,7 @@ def populate_database_all(db: Session):
 def get_all(db: Session):
     ## function that transforms the manipulated Data table to pandas dataframe
     ## function that calculates the trend, based on growth compared to previous month
-    return db.query(models.ManipulatedData).filter(models.ManipulatedData.date == "2017-01-01").all()
+    return db.query(models.ManipulatedData).all()
 
 
 def get_image(db, genre):
