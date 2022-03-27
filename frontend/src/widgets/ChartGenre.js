@@ -80,7 +80,7 @@ const transformDataToArray = (mode, data) => {
         // for each month
        
         if (genres.filter(genre => genre.date === date)[0] !== undefined) {
-          console.log(genres[i])
+          // console.log(genres.filter(genre => genre.date === date)[0])
           dataPerGenreArray[i] = genres.filter(genre => genre.date === date)[0].rank_aggregate;
         } else {
           // console.log(i)
@@ -91,6 +91,7 @@ const transformDataToArray = (mode, data) => {
       }
 
       dataArray.push(dataPerGenreArray);
+      // console.log(dataPerGenreArray)
     }
   }
 
@@ -204,13 +205,6 @@ const ChartGenre = (props) => {
       },
     },
   };
-
-  // const [allData, setAllData] = useState();
-
-  // useEffect(() => {
-  //   setAllData(props.data);
-  //   console.log(allData);
-  // }, [props.data, allData]);
 
   return (
     <div className="chart__wrapper">
