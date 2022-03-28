@@ -9,7 +9,7 @@ import json
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import crud, models, schemas, utils
-#from database.database import SessionLocal, engine
+from database.database import SessionLocal, engine
 from datetime import datetime
 
 models.Base.metadata.create_all(bind=engine)
