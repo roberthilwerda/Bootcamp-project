@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 fastapi
 uvicorn
 httpx
@@ -10,7 +7,6 @@ spotipy
 pydantic
 uuid
 typing
->>>>>>> 867041cb8fece1ed2f259d2f3178ed7a77abe323
 anyio==3.5.0
 asgiref==3.5.0
 autopep8==1.6.0
@@ -56,7 +52,6 @@ urllib3==1.26.7
 uuid==1.30
 uvicorn==0.17.5
 zope.interface==5.4.0
-=======
 fastapi
 uvicorn
 httpx
@@ -66,4 +61,3 @@ spotipy
 pydantic
 uuid
 typing
->>>>>>> ce5dd77 (test)
