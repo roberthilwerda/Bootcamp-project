@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Header.css";
 
-const Header = () => {
+const Header = (props) => {
   const [showMenuItems, setShowMenuItems] = useState(false);
 
   const clickHandler = () => {
@@ -31,7 +31,7 @@ const Header = () => {
             display: showMenuItems ? "flex" : "none",
           }}
         >
-          <div className="header__item">
+          <div className="header__item" onClick={props.setShowHomePage}>
             <h4>Home</h4>
           </div>
           <div className="header__item">

@@ -35,6 +35,10 @@ def create_raw_data(db:Session, item):
     db.commit()
     db.refresh(item)
 
+def create_genre(db:Session, item):
+    db.add(item)
+    db.commit()
+    db.refresh(item)
 
 
 
