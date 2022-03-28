@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 database
 venv
 
@@ -9,3 +10,7 @@ venv
 
 database/
 venv/
+=======
+backend-env
+database
+>>>>>>> development
