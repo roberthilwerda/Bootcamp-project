@@ -1,4 +1,16 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+fastapi
+uvicorn
+httpx
+billboard.py
+sqlalchemy
+spotipy
+pydantic
+uuid
+typing
+>>>>>>> 867041cb8fece1ed2f259d2f3178ed7a77abe323
 anyio==3.5.0
 asgiref==3.5.0
 autopep8==1.6.0

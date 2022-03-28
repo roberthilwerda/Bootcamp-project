@@ -1,2 +1,16 @@
+<<<<<<< HEAD
+database
+venv
+
+/database/
+/venv/
+
+/database
+/venv
+
+database/
+venv/
+=======
 backend-env
 database
+>>>>>>> development
