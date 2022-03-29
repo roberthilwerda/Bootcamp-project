@@ -10,27 +10,45 @@ function capitalize(string) {
 }
 
 const StatsByGenre = (props) => {
-
   const genre = props.genre;
   const imageUrl = props.imageUrl;
   const ranking = props.ranking;
 
   return (
     <div
+      className="black_container"
       onClick={() => {
         props.onClickHandler(genre);
       }}
-      className="genre__item"
     >
-      <div className="genre__image-wrapper">
-        <img alt="" className="genre__image" src={imageUrl}></img>
+      <div className="bg-container">
+        <div
+          className="genre__item"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        >
+          {" "}
+        </div>
       </div>
 
-      <div className="genre__title">
-        <div className="genre__title_genre">
-          {ranking}. {capitalize(genre)}
-        </div>
+      <div className="click_to_view-container">
         <div className="click_to_view">View stats</div>
+      </div>
+
+      <div className="genre__title-container">
+        <div className="genre__title">
+          <p>
+            {ranking}. {capitalize(genre)}{" "}
+          </p>
+
+          <div className="growth_indicator">
+            <img
+              className="growth_indicator__icon"
+              alt=""
+              src={require("../img/icon-up.png")}
+            />
+            <p>5.56%</p>
+          </div>
+        </div>
       </div>
     </div>
   );

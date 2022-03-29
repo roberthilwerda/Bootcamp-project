@@ -10,6 +10,9 @@ const WidgetsPage = (props) => {
   const [filteredData, setFilteredData] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [pagination, setPagination] = useState(0);
+  const [startYear, setStartYear] = useState(2021)
+  const [endYear, setEndYear] = useState(2021)
+  const [selectedMonth, setSelectedMonth] = useState("2021-12")
 
   const fetchData = useCallback(async () => {
     const response = await fetch("http://localhost:8000/");
@@ -80,22 +83,32 @@ const WidgetsPage = (props) => {
         })
         .slice(6 * (pagination + 1), 6 * (pagination + 1) + 6)
     );
-    setPagination(pagination+1)
+    setPagination(pagination + 1);
   };
 
-  const numOfPages = (allData) => {
-    const length = allData.filter(entry => entry.date === "2021-12-01").length / 6
-    return Math.ceil(length) - 1;
+  const changeMonthHandler = (event) => {
+    setSelectedMonth(event.data)
   }
 
-  console.log(numOfPages(allData))
-  console.log(pagination)
+  const numOfPages = (allData) => {
+    const length =
+      allData.filter((entry) => entry.date === "2021-12-01").length / 6;
+    return Math.ceil(length) - 1;
+  };
+
+  console.log(numOfPages(allData));
+  console.log(pagination);
 
   const showHomePageContent = () => {
     return (
       <div className="widgetspage__wrapper">
         <div className="widgetspage__col-genres">
           <div style={{ fontSize: 20 }} className="widgetspage__title">
+            <div className="monthpicker">
+              <span className="monthpicker__title">Pick a month</span>
+              <input className="monthpicker__picker" type="month" min="2012-01" max="2021-12" value={selectedMonth} onChange={changeMonthHandler}></input>
+            </div>
+            <p>Most popular genres</p>
             <img
               className="pagination_button"
               style={{ visibility: pagination === 0 && "hidden" }}
@@ -103,9 +116,10 @@ const WidgetsPage = (props) => {
               src={require("../img/icon-back.png")}
               onClick={prevPageClickHandler}
             />
-            <p>Most popular genres</p>
             <img
-              style={{ visibility: pagination === numOfPages(allData) && "hidden" }}
+              style={{
+                visibility: pagination === numOfPages(allData) && "hidden",
+              }}
               className="pagination_button"
               alt=""
               src={require("../img/icon-forward.png")}
@@ -113,56 +127,73 @@ const WidgetsPage = (props) => {
             />
           </div>
 
-          {props.showHomePage &&
-            filteredData.map((item, index) => {
-              return (
-                <StatsByGenre
-                  key={item.id}
-                  ranking={6 * pagination + index + 1}
-                  genre={item.genre}
-                  imageUrl={item.image_url}
-                  onClickHandler={() => showComponent(item.genre)}
-                />
-              );
-            })}
+          <div className="statsbygenre__container">
+            {props.showHomePage &&
+              filteredData.map((item, index) => {
+                return (
+                  <StatsByGenre
+                    key={item.id}
+                    ranking={6 * pagination + index + 1}
+                    genre={item.genre}
+                    imageUrl={item.image_url}
+                    onClickHandler={() => showComponent(item.genre)}
+                  />
+                );
+              })}
+          </div>
         </div>
 
         <div className="widgetspage__col-charts">
           <div style={{ fontSize: 20 }} className="widgetspage__title">
             <div className="date_input_content">
-              <label>Start date:</label>
+              <label>Start year:</label>
 
-              <input
-                className="date_input"
-                type="date"
-                id="start"
-                name="trip-start"
-                min="2012-01-01"
-                max="2021-12-31"
-              />
+              <select id="startyear" name="startyear">
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2019">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021" selected>
+                  2021
+                </option>
+              </select>
             </div>
             <p>Trends</p>
             <div className="date_input_content">
               <label>End date:</label>
 
-              <input
-                className="date_input"
-                type="date"
-                id="start"
-                name="trip-start"
-                min="2012-01-01"
-                max="2021-12-31"
-              />
+              <select id="endyear" name="endyear">
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2019">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021" selected>
+                  2021
+                </option>
+              </select>
             </div>
           </div>
-          <ChartGenre
-            mode={"multiple"}
-            data={getDataArray(allData)}
-            filteredData={filteredData}
-            genre={getGenresArray(filteredData)}
-            goBack={goBackClickHandler}
-          />
-          <InfoWidget />
+          <div className="chartinfo__container">
+            <ChartGenre
+              mode={"multiple"}
+              startYear={startYear}
+              endYear={endYear}
+              data={getDataArray(allData)}
+              genre={getGenresArray(filteredData)}
+              goBack={goBackClickHandler}
+            />
+            <InfoWidget />
+          </div>
         </div>
       </div>
     );
@@ -182,7 +213,6 @@ const WidgetsPage = (props) => {
   };
 
   if (props.showHomePage) {
-
     return showHomePageContent();
   } else {
     return showGenrePageContent(selectedGenre);
