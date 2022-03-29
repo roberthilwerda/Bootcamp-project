@@ -14,13 +14,15 @@ const WidgetsPage = (props) => {
   const [endYear, setEndYear] = useState(2021)
   const [selectedMonth, setSelectedMonth] = useState("2021-12")
 
+  console.log((selectedMonth))
+
   const fetchData = useCallback(async () => {
     const response = await fetch("http://localhost:8000/");
     const data = await response.json();
     setAllData(data);
     setFilteredData(
       data
-        .filter((genre) => genre.date === "2021-12-01")
+        .filter((genre) => genre.date === `${selectedMonth}-01`)
         .sort(function (a, b) {
           return b.rank_aggregate - a.rank_aggregate;
         })
@@ -66,7 +68,7 @@ const WidgetsPage = (props) => {
   const prevPageClickHandler = () => {
     setPagination(pagination - 1);
     const newData = allData
-      .filter((genre) => genre.date === "2021-12-01")
+      .filter((genre) => genre.date === `${selectedMonth}-01`)
       .sort(function (a, b) {
         return b.rank_aggregate - a.rank_aggregate;
       })
@@ -77,7 +79,7 @@ const WidgetsPage = (props) => {
   const nextPageClickHandler = () => {
     setFilteredData(
       allData
-        .filter((genre) => genre.date === "2021-12-01")
+        .filter((genre) => genre.date === `${selectedMonth}-01`)
         .sort(function (a, b) {
           return b.rank_aggregate - a.rank_aggregate;
         })
@@ -86,13 +88,23 @@ const WidgetsPage = (props) => {
     setPagination(pagination + 1);
   };
 
-  const changeMonthHandler = (event) => {
-    setSelectedMonth(event.data)
+  const changeMonthHandler = async (event) => {
+    await setSelectedMonth(event.target.value)
+    
+    await setFilteredData(
+      allData
+        .filter((genre) => genre.date === `${selectedMonth}-01`)
+        .sort(function (a, b) {
+          return b.rank_aggregate - a.rank_aggregate;
+        })
+        .slice(0, 6)
+    );
+    console.log(event.target.value)
   }
 
   const numOfPages = (allData) => {
     const length =
-      allData.filter((entry) => entry.date === "2021-12-01").length / 6;
+      allData.filter((entry) => entry.date === `${selectedMonth}-01`).length / 6;
     return Math.ceil(length) - 1;
   };
 
@@ -106,7 +118,7 @@ const WidgetsPage = (props) => {
           <div style={{ fontSize: 20 }} className="widgetspage__title">
             <div className="monthpicker">
               <span className="monthpicker__title">Pick a month</span>
-              <input className="monthpicker__picker" type="month" min="2012-01" max="2021-12" value={selectedMonth} onChange={changeMonthHandler}></input>
+              <input className="monthpicker__picker" type="month" min="2012-01" max="2021-12" defaultValue={"2021-12"} onChange={changeMonthHandler}></input>
             </div>
             <p>Most popular genres</p>
             <img
@@ -165,7 +177,7 @@ const WidgetsPage = (props) => {
             </div>
             <p>Trends</p>
             <div className="date_input_content">
-              <label>End date:</label>
+              <label>End year:</label>
 
               <select id="endyear" name="endyear">
                 <option value="2012">2012</option>
@@ -177,8 +189,7 @@ const WidgetsPage = (props) => {
                 <option value="2019">2018</option>
                 <option value="2019">2019</option>
                 <option value="2020">2020</option>
-                <option value="2021" selected>
-                  2021
+                <option value="2021">2021
                 </option>
               </select>
             </div>
