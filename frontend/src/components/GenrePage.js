@@ -27,11 +27,10 @@ const GenrePage = (props) => {
           <div className="genre_page__chart-content">
             <ChartGenre
               genre={props.genre}
+              startYear={props.startYear}
+              endYear={props.endYear}
               mode={"single"}
-              data={props.data.filter(
-                (data) =>
-                  data.genre === props.genre && data.date.includes("2021")
-              )}
+              data={props.data.filter((data) => data.genre === props.genre)}
             />
           </div>
         </div>

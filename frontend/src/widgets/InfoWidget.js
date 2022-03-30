@@ -14,8 +14,7 @@ const InfoWidget = (props) => {
             monthly basis.
             <br />
             <br />
-            The six most trending genres as displayed on this page are calculated based
-            on the growth of popularity and the genre ranking in the Billboard.
+            The genres as displayed on this page are ranked on popularity. The chart shows the trends of the genres in the Billboard.
             <br />
             <br />
             GenTrend was created in 2022 by David Kats, Kaj van der Valk, Thomas
