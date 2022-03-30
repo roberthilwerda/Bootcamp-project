@@ -118,7 +118,7 @@ const ChartGenre = (props) => {
       ],
     };
   } else {
-    console.log(allData);
+
     data = {
       labels: labels,
       datasets: [
