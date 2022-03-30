@@ -20,7 +20,7 @@ const GenrePage = (props) => {
 
       <div className="genre_page__container">
         <div className="genre_page__title">
-          <h1>{capitalize(props.genre)} statistics</h1>
+          <h1>{capitalize(props.genre)}</h1>
         </div>
 
         <div className="genre_page__chart">
