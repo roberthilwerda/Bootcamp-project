@@ -1,101 +1,91 @@
 .genre_page__wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    min-height: calc(100vh - 5rem);
-    width: 100%;
-    justify-content: center;
-    align-content: stretch;
-  }
-
-  .genre_page__container {
-    /* border: 2px solid green; */
-    width: 100%;
-    min-height: calc(100vh - 5rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: calc(100vh - 5rem);
+  width: 100%;
+  justify-content: center;
+  align-content: stretch;
 }
-  
-  .genre_page__back {
-    display: flex;
-    position: absolute;
-    left: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-    /* border: 2px solid red; */
-    margin: 1rem 2rem;
-  }
-  
-  .genre_page__back-icon {
-    color: wheat;
-    font-size: large;
-    font-weight: 500;
-    background-color: black;
-    width: 5rem;
-    height: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 30px;
-    padding: 0rem 1rem;
-  }
-  
-  .genre_page__back-icon:hover {
-    cursor: pointer;
-  }
 
+.genre_page__container {
+  /* border: 2px solid green; */
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* align-items: center; */
+  align-content: stretch;
+  min-height: calc(100vh - 5rem);
+}
 
-  .genre_page__title {
-    width: 100%;
-    height: 5rem;
-    max-height: 5rem;
-    display: flex;
-    justify-content: center;
-    /* border: 2px solid green; */
-    
-  }
-  
+.genre_page__back {
+  display: flex;
+  position: absolute;
+  left: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  /* border: 2px solid red; */
+  margin: 1rem 2rem;
+}
+
+.genre_page__back-icon {
+  color: wheat;
+  font-size: large;
+  font-weight: 500;
+  background-color: black;
+  width: 5rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  padding: 0rem 1rem;
+}
+
+.genre_page__back-icon:hover {
+  cursor: pointer;
+}
+
+.genre_page__title {
+  width: 100%;
+  height: 5rem;
+  max-height: 5rem;
+  display: flex;
+  justify-content: center;
+  /* border: 2px solid green; */
+}
+
 .genre_page__artist-slider {
   width: 100%;
-    /* border: 2px solid green; */
-    background-color: wheat;
-
+  /* border: 2px solid green; */
+  background-color: wheat;
 }
 
 .genre_page__chart {
-    /* border: 2px solid green; */
-    width: 100%;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.568);
-    height: 100%;
+  /* border: 2px solid green; */
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.568);
+  height: 100%;
 }
 
 .genre_page__chart-content {
   width: 90%;
 }
 
-
-
-
-
 @media (min-width: 100px) and (max-width: 600px) {
-
   .genre_page__back {
     /* bottom: 50px; */
     left: 0px;
     position: relative;
     margin: none;
-
-  } 
-
-
-
+  }
 }
 
-
 @media (min-width: 200px) and (max-width: 800px) {
-
-
   .genre_page__wrapper {
     min-height: 0;
   }
@@ -105,7 +95,11 @@
     height: auto;
   }
 
-.genre_page__chart-content {
-  min-width: 400px;
+  .genre_page__container {
+    display:block;
+  }
+
+  .genre_page__chart-content {
+    min-width: 400px;
+  }
 }
- }

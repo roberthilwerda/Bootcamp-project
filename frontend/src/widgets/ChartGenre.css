@@ -20,7 +20,7 @@
   padding: 1rem;
 }
 
-@media (min-width: 200px) and (max-width: 600px) {
+@media (min-width: 200px) and (max-width: 800px) {
   .widgetspage__col-charts .chart__container {
     display: none;
   }

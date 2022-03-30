@@ -7,7 +7,8 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
   border-radius: 15px;
   align-items: flex-start;
-  margin-top: 1rem;
+  margin: 1.25rem;
+
 }
 
 .info__text {
@@ -34,7 +35,15 @@
   font-size: 1rem;
 }
 
-@media (min-width: 200px) and (max-width: 600px) {
+@media (min-width: 600px) and (max-width: 1000px) {
+
+  .info__wrapper {
+    height: auto;
+  }
+
+}
+
+@media (min-width: 200px) and (max-width: 1000px) {
 
 
   .info__wrapper {
