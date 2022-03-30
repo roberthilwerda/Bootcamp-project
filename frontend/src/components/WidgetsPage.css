@@ -36,12 +36,13 @@
 .widgetspage__title {
   display: flex;
   flex-wrap: wrap;
-  height: 5rem;
+  /* height: 5rem; */
   justify-content: center;
   gap: 3rem;
   align-items: center;
   width: 100%;
   margin-top: 1rem;
+  /* border: 2px solid red; */
 }
 
 .widgetspage__title p {
@@ -138,6 +139,23 @@ h3 {
   align-items: center;
 }
 
+
+.pagination__wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 8rem;
+  justify-content: space-between;
+  /* border: 2px solid black; */
+}
+
+.monthpicker {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* border: 2px solid black; */
+  width: 10rem;
+}
+
 .pagination_button {
   background-color: wheat;
   border-radius: 50px;
@@ -149,16 +167,10 @@ h3 {
   cursor: pointer;
 }
 
-.monthpicker {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  /* border: 2px solid black; */
-  width: 11rem;
-}
+
 
 .monthpicker__title {
-  width: 100%;
+  /* width: 100%; */
   text-align: center;
   padding: 0.25rem;
 }
@@ -188,7 +200,7 @@ h3 {
 }
 
 @media (min-width: 300px) and (max-width: 1000px) {
-  .widgetspage__col-genres {
+  .statsbygenre__container {
     min-width: 750px;
     /* border: 2px solid green; */
   }
@@ -196,6 +208,32 @@ h3 {
   .widgetspage__col-charts {
     min-width: 750px;
     /* border: 2px solid green; */
+  }
+
+  .pagination__wrapper {
+    width: 100%;
+    justify-content: center;
+    gap: 3rem;
+  }
+
+  .monthpicker {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .monthpicker__title {
+    width: 100%;
+  }
+
+  .widgetspage__title {
+    /* height: 10rem; */
+    /* width: 100%; */
+    gap: 0rem;
+  }
+
+  .chartinfo__container {
+    height: auto;
   }
 
 }
@@ -207,31 +245,32 @@ h3 {
     justify-content: center;
   }
 
-.widgetspage__col-genres {
-  max-width: 90%;
+.widgetspage__col-charts {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
 }
 
-  .widgetspage__col-charts {
-    visibility: hidden;
+  .widgetspage__col-charts .widgetspage__title{
+    display: none;
+    /* height: 100px; */
   }
 
-  .widgetspage__title {
-    height: 10rem;
-    width: 100%;
+  .widgetspage__col-charts .chart__wrapper{
+    display: none;
   }
 
-  .monthpicker {
-    width: 50%;
+  .info__wrapper {
     display: flex;
-    flex-wrap: wrap;
   }
 
-  .monthpicker__title {
-    width: 100%;
+  .statsbygenre__container {
+    height: auto;
   }
 
-  .monthpicker__picker {
-    width: 100%;
-  }
+
+
+
  
 }

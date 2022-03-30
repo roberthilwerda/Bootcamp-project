@@ -21,7 +21,7 @@
 }
 
 @media (min-width: 200px) and (max-width: 600px) {
-  .chart__container {
+  .widgetspage__col-charts .chart__container {
     display: none;
   }
 }

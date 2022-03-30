@@ -14,10 +14,10 @@ const WidgetsPage = (props) => {
   const [endYear, setEndYear] = useState(2021)
   const [selectedMonth, setSelectedMonth] = useState("2021-12")
 
-  console.log((selectedMonth))
+  // console.log((selectedMonth))
 
   const fetchData = useCallback(async () => {
-    const response = await fetch("http://localhost:8000/");
+    const response = await fetch("http://192.168.178.26:8000/");
     const data = await response.json();
     setAllData(data);
     setFilteredData(
@@ -88,18 +88,20 @@ const WidgetsPage = (props) => {
     setPagination(pagination + 1);
   };
 
-  const changeMonthHandler = async (event) => {
-    await setSelectedMonth(event.target.value)
-    
-    await setFilteredData(
+  const changeMonthHandler = (event) => {
+    const newMonth = event.target.value
+    setPagination(0)
+    setSelectedMonth(newMonth)
+    console.log(selectedMonth)
+    setFilteredData(
       allData
-        .filter((genre) => genre.date === `${selectedMonth}-01`)
+        .filter((genre) => genre.date === `${event.target.value}-01`)
         .sort(function (a, b) {
           return b.rank_aggregate - a.rank_aggregate;
         })
         .slice(0, 6)
     );
-    console.log(event.target.value)
+   
   }
 
   const numOfPages = (allData) => {
@@ -116,27 +118,35 @@ const WidgetsPage = (props) => {
       <div className="widgetspage__wrapper">
         <div className="widgetspage__col-genres">
           <div style={{ fontSize: 20 }} className="widgetspage__title">
+
             <div className="monthpicker">
               <span className="monthpicker__title">Pick a month</span>
               <input className="monthpicker__picker" type="month" min="2012-01" max="2021-12" defaultValue={"2021-12"} onChange={changeMonthHandler}></input>
             </div>
-            <p>Most popular genres</p>
-            <img
-              className="pagination_button"
-              style={{ visibility: pagination === 0 && "hidden" }}
-              alt=""
-              src={require("../img/icon-back.png")}
-              onClick={prevPageClickHandler}
-            />
-            <img
-              style={{
-                visibility: pagination === numOfPages(allData) && "hidden",
-              }}
-              className="pagination_button"
-              alt=""
-              src={require("../img/icon-forward.png")}
-              onClick={nextPageClickHandler}
-            />
+
+            <div className="genrecards__title">
+              <p>Most popular genres</p>
+            </div>
+
+            <div className="pagination__wrapper">
+              <img
+                className="pagination_button"
+                style={{ display: pagination === 0 && "none" }}
+                alt=""
+                src={require("../img/icon-back.png")}
+                onClick={prevPageClickHandler}
+              />
+              <img
+                style={{
+                  display: pagination === numOfPages(allData) && "none",
+                }}
+                className="pagination_button"
+                alt=""
+                src={require("../img/icon-forward.png")}
+                onClick={nextPageClickHandler}
+              />
+            </div>
+
           </div>
 
           <div className="statsbygenre__container">
@@ -170,7 +180,7 @@ const WidgetsPage = (props) => {
                 <option value="2019">2018</option>
                 <option value="2019">2019</option>
                 <option value="2020">2020</option>
-                <option value="2021" selected>
+                <option value="2021">
                   2021
                 </option>
               </select>

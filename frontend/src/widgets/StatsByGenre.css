@@ -121,6 +121,7 @@
 
 @media (min-width: 100px) and (max-width: 800px) {
   .black_container {
-    width: 400px;
+    width: 350px;
   }
+  
 }
