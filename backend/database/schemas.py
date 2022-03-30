@@ -2,14 +2,6 @@ from uuid import UUID
 from pydantic import BaseModel
 from typing import Optional
 
-class Genre(BaseModel):
-    name: str
-    
-
-
-class GenreArtist(BaseModel):
-    id: Optional[str]
-
 class RawData(BaseModel):
     id: Optional[str]
     date: str
@@ -18,6 +10,26 @@ class RawData(BaseModel):
     number_of_followers = int
     genre = str
     image_url = str
+
+    class Config:
+        orm_mode = True
+
+class ManipulatedData(BaseModel):
+    id: int
+    date: str
+    genre: str
+    rank_aggregate = float
+    count = int
+    image_url = str
+
+
+    class Config:
+        orm_mode = True
+
+class Genre(BaseModel):
+    id: int
+    genre: Optional[str]
+    image_url: Optional[str]
 
     class Config:
         orm_mode = True

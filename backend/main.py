@@ -26,6 +26,9 @@ def get_db():
 ## CORS block of browser workaround
 origins = [
     "http://localhost",
+    # "192.168.178.16",
+    # "https://192.168.178.16",
+    "http://192.168.178.26:3000",
     "http://localhost:3000",
     "https://localhost:3000",
 ]
@@ -38,12 +41,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/{genre}")
-def genre(genre: str, db: Session = Depends(get_db)):
-    entries = db.query(models.Artist).join(models.Genre)
-    ## get artists with that genre
-    ## sort on popularity
-    ## return list of artists
+@app.get("/")
+def all_data(db: Session = Depends(get_db)):
+    return utils.get_all(db=db)
 
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
@@ -57,5 +57,16 @@ def populate_database_manual(date: str, db: Session = Depends(get_db)):
 def populate_database_all(db: Session = Depends(get_db)):
     return utils.populate_database_all(db=db)
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+@app.get("/save_genres")
+def save_genres(db: Session = Depends(get_db)):
+    return utils.save_genres(db=db)
+
+@app.get("/save_images")
+def save_images(db: Session = Depends(get_db)):
+    return utils.save_images(db=db)
+
+    
+
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="localhost", port=8000)
+

@@ -1,102 +1,124 @@
 import "./WidgetsPage.css";
 import StatsByGenre from "../widgets/StatsByGenre";
 import ChartGenre from "../widgets/ChartGenre";
-import GenrePage from "./GenrePage";
-import { useState } from "react";
-import ArtistSlider from "../widgets/ArtistSlider";
+import InfoWidget from "../widgets/InfoWidget";
+import { useState, useEffect, useCallback } from "react";
+import GenrePage from "../components/GenrePage";
 
-const WidgetsPage = () => {
-  let trendingGenres = [
-    { id: 1, genre: "Jazz", imageUrl: "https://i.scdn.co/image/ab6761610000e5eb0f9be189941db077530d5ae0"},
-    { id: 2, genre: "Rock", imageUrl: "https://i.scdn.co/image/ab6761610000e5eb0da5abcc5c0aef0c3cc573d0"},
-    { id: 3, genre: "Blues", imageUrl: "https://i.scdn.co/image/ab6761610000e5eb9e3acf1eaf3b8846e836f441"},
-    { id: 4, genre: "Classical", imageUrl: "https://i.scdn.co/image/ab6761610000e5ebd8b9980db67272cb4d2c3daf"},
-    { id: 5, genre: "EDM", imageUrl: "https://i.scdn.co/image/ab6761610000e5ebd42a27db3286b58553da8858"},
-    { id: 6, genre: "Reggae", imageUrl: "https://i.scdn.co/image/ab6761610000e5ebdec41838906c58af1c29c9da"},
-  ]; //replace with dynamic DB fetch later
+const WidgetsPage = (props) => {
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
 
-  async function fetchGenresHandler() {
+  const fetchData = useCallback(async () => {
     const response = await fetch("http://localhost:8000/");
     const data = await response.json();
+    setFilteredData(
+      data
+        .filter((genre) => genre.date === "2021-12-01")
+        .sort(function (a, b) {
+          return b.rank_aggregate - a.rank_aggregate;
+        })
+        .slice(0, 6)
+    );
+    setAllData(data);
+  }, []);
 
-    console.log(data);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  // function that sets the pagecontent to the stats-per-genre page
-  const onClickHandler = (genre) => {
-    setPageContent(
-      <div className="genre_page__wrapper">
-        <div className="genre_page__title-area">
-          <div className="genre_page__back">
-            <div className="genre_page__back-icon" onClick={goBackClickHandler}>
-              🡨
-            </div>
+  function showComponent(genre) {
+    setSelectedGenre(genre);
+    props.unsetShowHomePage(false);
+  }
+
+  function goBackClickHandler() {
+    props.setShowHomePage(true);
+  }
+
+  const getGenresArray = (filteredData) => {
+    let genresArray = [];
+    for (let i = 0; i < filteredData.length; i++) {
+      genresArray[i] = filteredData[i].genre;
+    }
+    return genresArray;
+  };
+
+  const getDataArray = (allData) => {
+    let dataArray = [];
+    const genres =  getGenresArray(filteredData);
+    for(const genre of genres){
+
+      dataArray.push(allData.filter(data => data.genre === genre && data.date.includes('2021')))
+    
+    }
+    // console.log(dataArray)
+    return dataArray
+  }
+
+  const showHomePageContent = () => {
+    return (
+      <div className="widgetspage__wrapper">
+        <div className="widgetspage__col-genres">
+          <div style={{ fontSize: 20 }} className="widgetspage__title">
+            <p>Most trending genres</p>
           </div>
 
-          <div className="genre_page__title">
-            <h1>{genre} STATS</h1>
+          {props.showHomePage &&
+            filteredData.map((item, index) => {
+              return (
+                <StatsByGenre
+                  key={item.id}
+                  ranking={index + 1}
+                  genre={item.genre}
+                  imageUrl={item.image_url}
+                  onClickHandler={() => showComponent(item.genre)}
+                />
+              );
+            })}
+        </div>
+
+        <div className="widgetspage__col-charts">
+          <div style={{ fontSize: 20 }} className="widgetspage__title">
+            <p>Trends</p>
           </div>
+          <ChartGenre
+            mode={"multiple"}
+            data={getDataArray(allData)}
+            filteredData={filteredData}
+            genre={getGenresArray(filteredData)}
+            goBack={goBackClickHandler}
+          />
+          <InfoWidget />
         </div>
-
-        <div className="genre_page__body">
-          <GenrePage genre={genre}></GenrePage>
-        </div>
-
-        <ArtistSlider />
       </div>
     );
   };
 
-  // function that resets the single-genre-page to the homepage content
-  const goBackClickHandler = () => {
-    setPageContent(initialPageContent);
+  const showGenrePageContent = (genre) => {
+    return (
+      <div className="widgetspage__wrapper">
+        <GenrePage
+          data={allData}
+          filteredData={filteredData}
+          genre={genre}
+          goBack={goBackClickHandler}
+        />
+      </div>
+    );
   };
 
-  // homepage content
-  const initialPageContent = (
-    <div className="widgetspage__wrapper">
-      <div className="widgetspage__col">
-        <div style={{ fontSize: 20 }} className="widgetspage__title">
-          <p>Most popular genres</p>
-        </div>
 
-        <div className="widgetspage__body">
-          {trendingGenres.map((item) => {
-            return (
-              <StatsByGenre
-                key={item.id}
-                ranking={item.id}
-                genre={item.genre}
-                imageUrl={item.imageUrl}
-                filter={`some genre`}
-                onClickHandler={onClickHandler}
-              />
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="chart__col">
-        <div style={{ fontSize: 20 }} className="widgetspage__title">
-          <p>Trends</p>
-        </div>
-
-        <div className="chart__body">
-          <div className="chart__item">
-            <ChartGenre />
-          </div>
-
-          <div className="chart__item">
-            <ChartGenre />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  let [pageContent, setPageContent] = useState(initialPageContent);
-
-  return pageContent;
+  if (props.showHomePage) {
+    return showHomePageContent();
+  } else {
+    return showGenrePageContent(selectedGenre);
+  }
 };
 
 export default WidgetsPage;
