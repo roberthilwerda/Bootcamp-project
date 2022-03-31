@@ -148,7 +148,7 @@ const WidgetsPage = (props) => {
                 type="month"
                 min="2012-01"
                 max="2021-12"
-                defaultValue={"2021-12"}
+                defaultValue={selectedMonth}
                 onChange={changeMonthHandler}
               ></input>
             </div>
@@ -160,14 +160,14 @@ const WidgetsPage = (props) => {
             <div className="pagination__wrapper">
               <img
                 className="pagination_button"
-                style={{ display: pagination === 0 && "none" }}
+                style={{ visibility: pagination === 0 && "hidden" }}
                 alt=""
                 src={require("../img/icon-back.png")}
                 onClick={prevPageClickHandler}
               />
               <img
                 style={{
-                  display: pagination === numOfPages(allData) && "none",
+                  visibility: pagination === numOfPages(allData) && "hidden",
                 }}
                 className="pagination_button"
                 alt=""
@@ -201,7 +201,7 @@ const WidgetsPage = (props) => {
               <select
                 id="startyear"
                 name="startyear"
-                defaultValue={"2021"}
+                defaultValue={startYear}
                 onChange={selectStartYearHandler}
               >
                 <option value="2012">2012</option>
@@ -223,7 +223,7 @@ const WidgetsPage = (props) => {
               <select
                 id="endyear"
                 name="endyear"
-                defaultValue={"2021"}
+                defaultValue={endYear}
                 onChange={selectEndYearHandler}
               >
                 <option value="2012">2012</option>
