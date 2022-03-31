@@ -22,21 +22,6 @@ ChartJS.register(
   Legend
 );
 
-const labels = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
 function capitalize(string) {
   try {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -45,55 +30,63 @@ function capitalize(string) {
   }
 }
 
-const transformDataToArray = (mode, data) => {
+const getLabels = (startYear, endYear) => {
+  const dates = [];
+  for (let year = startYear; year <= endYear; year++) {
+    dates.push(
+      `${year} Jan`,
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    );
+  }
+  return dates;
+};
+
+const getDates = (startYear, endYear) => {
+  const dates = [];
+  for (let year = startYear; year <= endYear; year++) {
+    dates.push(
+      `${year}-01-01`,
+      `${year}-02-01`,
+      `${year}-03-01`,
+      `${year}-04-01`,
+      `${year}-05-01`,
+      `${year}-06-01`,
+      `${year}-07-01`,
+      `${year}-08-01`,
+      `${year}-09-01`,
+      `${year}-10-01`,
+      `${year}-11-01`,
+      `${year}-12-01`
+    );
+  }
+  return dates;
+};
+
+const transformDataToArray = (data, startYear, endYear, genre) => {
+
   let dataArray = [];
-  let dates = [
-    "2021-01-01",
-    "2021-02-01",
-    "2021-03-01",
-    "2021-04-01",
-    "2021-05-01",
-    "2021-06-01",
-    "2021-07-01",
-    "2021-08-01",
-    "2021-09-01",
-    "2021-10-01",
-    "2021-11-01",
-    "2021-12-01",
-  ];
+  let dates = getDates(startYear, endYear);
 
-  if (mode === "single") {
-    for (let i = 0; i < dates.length; i++) {
-      try {
-        dataArray[i] = data.filter(
-          (months) => months.date === dates[i]
-        )[0].rank_aggregate;
-      } catch (error) {
-        dataArray[i] = 0;
-      }
-    }
-  } else {
-    for (const genres of data) {
-      let dataPerGenreArray = []; // 1 array of 6 arrays
-
-      for (const [i, date] of dates.entries()) {
-        // for each month
-       
-        if (genres.filter(genre => genre.date === date)[0] !== undefined) {
-          // console.log(genres.filter(genre => genre.date === date)[0])
-          dataPerGenreArray[i] = genres.filter(genre => genre.date === date)[0].rank_aggregate;
-        } else {
-          // console.log(i)
-          dataPerGenreArray[i] = 0;
-        }
-
-        // console.log(dataPerGenreArray)
-      }
-
-      dataArray.push(dataPerGenreArray);
-      // console.log(dataPerGenreArray)
+  for (let i = 0; i < dates.length; i++) {
+    try {
+      dataArray[i] = data.filter(
+        (months) => months.date === dates[i]
+      )[0].rank_aggregate;
+    } catch (error) {
+      dataArray[i] = 0;
     }
   }
+
 
   return dataArray;
 };
@@ -101,10 +94,13 @@ const transformDataToArray = (mode, data) => {
 const ChartGenre = (props) => {
   const allData = props.data;
 
+
+  // console.log(transformDataToArray("single", allData, props.startYear, props.endYear))
+
   let data;
   if (props.mode === "single") {
     data = {
-      labels: labels,
+      labels: getLabels(props.startYear, props.endYear),
       datasets: [
         {
           label: `Popularity index of ${capitalize(props.genre)}`,
@@ -113,75 +109,128 @@ const ChartGenre = (props) => {
           backgroundColor: "wheat",
           borderColor: "wheat",
           borderWidth: 2,
-          data: transformDataToArray("single", allData),
+          data: transformDataToArray(
+            allData,
+            props.startYear,
+            props.endYear
+            // props.genre
+          ),
         },
       ],
     };
   } else {
-
     data = {
-      labels: labels,
+      labels: getLabels(props.startYear, props.endYear),
+
       datasets: [
         {
-          label: capitalize(props.genre[0]),
+          label: capitalize(props.genreArray[0]),
           fill: true,
           lineTension: 0.5,
           backgroundColor: "goldenrod",
           borderColor: "goldenrod",
           borderWidth: 2,
-          data: transformDataToArray("multiple", allData)[0],
+          data: transformDataToArray(
+            allData.filter(data => data.genre === props.genreArray[0]),
+            props.startYear,
+            props.endYear,
+            // props.genreArray[0]
+          ),
         },
         {
-          label: capitalize(props.genre[1]),
+          label: capitalize(props.genreArray[1]),
           fill: false,
           lineTension: 0.5,
           backgroundColor: "silver",
           borderColor: "silver",
           borderWidth: 2,
-          data: transformDataToArray("multiple", allData)[1],
+          data: transformDataToArray(
+            allData.filter(data => data.genre === props.genreArray[1]),
+            props.startYear,
+            props.endYear,
+            // props.genreArray[1]
+          ),
         },
         {
-          label: capitalize(props.genre[2]),
+          label: capitalize(props.genreArray[2]),
           fill: false,
           lineTension: 0.5,
           backgroundColor: "brown",
           borderColor: "brown",
           borderWidth: 2,
-          data: transformDataToArray("multiple", allData)[2],
+          data: transformDataToArray(
+            allData.filter(data => data.genre === props.genreArray[2]),
+            props.startYear,
+            props.endYear,
+            props.genreArray[2]
+          ),
         },
         {
-          label: capitalize(props.genre[3]),
+          label: capitalize(props.genreArray[3]),
           fill: false,
           lineTension: 0.5,
           backgroundColor: "rgba(75,192,192,1)",
           borderColor: "rgba(75,192,192,1)",
           borderWidth: 2,
-          data: transformDataToArray("multiple", allData)[3],
+          data: transformDataToArray(
+            allData.filter(data => data.genre === props.genreArray[3]),
+            props.startYear,
+            props.endYear,
+            props.genreArray[3]
+          ),
         },
         {
-          label: capitalize(props.genre[4]),
+          label: capitalize(props.genreArray[4]),
           fill: false,
           lineTension: 0.5,
           backgroundColor: "rgba(192,192,192,1)",
           borderColor: "rgba(192,192,192,1)",
           borderWidth: 2,
-          data: transformDataToArray("multiple", allData)[4],
+          data: transformDataToArray(
+            allData.filter(data => data.genre === props.genreArray[4]),
+            props.startYear,
+            props.endYear,
+            props.genreArray[4]
+          ),
         },
         {
-          label: capitalize(props.genre[5]),
+          label: capitalize(props.genreArray[5]),
           fill: false,
           lineTension: 0.5,
           backgroundColor: "rgba(101,56,192,1)",
           borderColor: "rgba(101,56,192,1)",
           borderWidth: 2,
-          data: transformDataToArray("multiple", allData)[5],
+          data: transformDataToArray(
+            allData.filter(data => data.genre === props.genreArray[5]),
+            props.startYear,
+            props.endYear,
+            props.genreArray[5]
+          ),
         },
       ],
     };
   }
 
+  const displayYear = (startYear, endYear) => {
+    let text;
+    startYear <= endYear &&
+      (startYear === endYear
+        ? (text = startYear)
+        : (text = `${startYear} - ${endYear}`));
+    return text;
+  };
+
   const config = {
     responsive: true,
+
+    plugins: {
+      title: {
+        display: true,
+        text: displayYear(props.startYear, props.endYear),
+        font: { size: 20, color: "red" },
+        color: "wheat",
+      },
+    },
 
     scales: {
       x: {
