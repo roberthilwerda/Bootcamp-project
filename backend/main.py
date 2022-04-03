@@ -7,6 +7,7 @@ import uvicorn
 # import spotipyapi
 import json
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 from database import crud, models, schemas, utils
 from database.database import SessionLocal, engine
@@ -79,6 +80,26 @@ def get_genre_trend(genre: str, date_from: str, date_to: str, db: Session = Depe
         where(models.RawData.genre == genre).\
         order_by(models.RawData.date.desc()).all()
     return results
+
+@app.get("/get_6_popular_genres")
+def get_popular_genres(db: Session = Depends(get_db)):
+    genres = db.execute(text("""
+        SELECT
+            genre,
+            MIN(date) as date,
+            SUM(1/CBRT(raw_data.rank)) AS weighted_rank,
+            LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC),
+            LEAD(SUM(1/CBRT(raw_data.rank)), 1) OVER(
+                PARTITION BY genre
+                ORDER BY date DESC) AS previous_weighted_rank,
+            date_part('month', AGE(MIN(date), LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC))) as diff_months
+
+        FROM raw_data
+        GROUP BY date, genre
+        ORDER BY date DESC, weighted_rank DESC
+        LIMIT 6
+        """)).all()
+    return genres
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
