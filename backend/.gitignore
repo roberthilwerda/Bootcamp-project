@@ -10,4 +10,4 @@ venv
 database/
 venv/
 
-__pycachne__
+__pycache__

@@ -26,6 +26,7 @@ class ManipulatedData(Base):
     rank_aggregate = Column(Float)
     count = Column(BigInteger)
     image_url = Column(String)
+    date_index = Column(Integer)
 
 class Genre(Base):
     __tablename__ = 'genre'

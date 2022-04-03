@@ -21,6 +21,7 @@ class ManipulatedData(BaseModel):
     rank_aggregate = float
     count = int
     image_url = str
+    date_index = int
 
 
     class Config:
