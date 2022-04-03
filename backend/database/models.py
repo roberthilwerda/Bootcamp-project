@@ -1,4 +1,3 @@
-from numpy import unicode_
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, BigInteger, String, Float
 from sqlalchemy.orm import relationship
