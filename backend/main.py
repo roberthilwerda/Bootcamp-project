@@ -11,6 +11,8 @@ from sqlalchemy.orm import Session
 from database import crud, models, schemas, utils
 from database.database import SessionLocal, engine
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -65,8 +67,19 @@ def save_genres(db: Session = Depends(get_db)):
 def save_images(db: Session = Depends(get_db)):
     return utils.save_images(db=db)
 
-    
+@app.get("/search/{genre}")
+def get_genre_trend(genre: str, date_from: str, date_to: str, db: Session = Depends(get_db)):
+    # most_recent_date = db.query(models.RawData.date).order_by(models.RawData.date.desc()).first()
+    # three_months_before = most_recent_date[0] - relativedelta(months=3)
+    date_from = datetime.strptime(date_from, "%Y-%m-%d")
+    date_to = datetime.strptime(date_to, "%Y-%m-%d")
+    results = db.query(models.RawData).\
+        where(models.RawData.date >= date_from).\
+        where(models.RawData.date <= date_to).\
+        where(models.RawData.genre == genre).\
+        order_by(models.RawData.date.desc()).all()
+    return results
 
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="localhost", port=8000)
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000)
 
