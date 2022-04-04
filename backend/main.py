@@ -104,3 +104,29 @@ def get_popular_genres(db: Session = Depends(get_db)):
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
 
+
+## Query to get the top 6 of every month
+"""
+WITH results AS (
+	SELECT
+		genre,
+		MIN(date) as date,
+		SUM(1/CBRT(raw_data.rank)) AS weighted_rank,
+		LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC),
+		LEAD(SUM(1/CBRT(raw_data.rank)), 1) OVER(
+			PARTITION BY genre
+			ORDER BY date DESC) AS previous_weighted_rank,
+		date_part('month', AGE(MIN(date), LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC))) as diff_months,
+		rank() OVER (PARTITION BY date ORDER BY SUM(1/CBRT(raw_data.rank)) DESC) as ranking
+	FROM raw_data
+	GROUP BY date, genre
+	ORDER BY date DESC, weighted_rank DESC
+)
+SELECT results.date, results.genre, weighted_rank, previous_weighted_rank,((weighted_rank-previous_weighted_rank)/(previous_weighted_rank))/(diff_months) * 100 as growth,ranking,
+FROM results
+WHERE results.ranking < 7
+
+
+
+
+"""
