@@ -18,7 +18,7 @@ const WidgetsPage = (props) => {
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
-    const response = await fetch("http://localhost:8000/");
+    const response = await fetch("http://192.168.1.53:8000/");
     const data = await response.json();
     setAllData(data);
     setFilteredData(
