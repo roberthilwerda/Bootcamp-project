@@ -4,6 +4,7 @@ import ChartGenre from "../widgets/ChartGenre";
 import InfoWidget from "../widgets/InfoWidget";
 import { useState, useEffect, useCallback } from "react";
 import GenrePage from "../components/GenrePage";
+import Player from "../widgets/Player";
 
 const WidgetsPage = (props) => {
   const [allData, setAllData] = useState([]);
@@ -98,6 +99,7 @@ const WidgetsPage = (props) => {
         </div>
       </div>
     );
+    <Player />
   };
 
   const showGenrePageContent = (genre) => {

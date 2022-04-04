@@ -3,7 +3,7 @@ from numpy import NaN
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
 from sqlalchemy.orm import Session
-from sqlalchemy import update
+from sqlalchemy import update, text
 from . import models, crud
 from datetime import datetime, timedelta
 import numpy as np
@@ -21,6 +21,7 @@ def extract_chart(date):
 def retrieve_artist_data(artist_name):
     try:
         results = sp.search(q = artist_name, limit=3, type ='artist') ## object
+        
     except:
         return 'None'
     
@@ -98,6 +99,29 @@ def save_images(db):
         
         db.execute(update(model).where(model.id == x.id).values({'image_url' : str(image_url[0])}))
         db.commit()
+
+
+def play_button(db, artist="Red Hot Chili Peppers"):
+
+    db_fetch = db.execute(text("""
+    SELECT DISTINCT artist_name FROM public.raw_data
+    ORDER BY artist_name ASC
+    """)).all()
+
+    new_array = []  
+
+
+    for entry in db_fetch:
+        artist_data = sp.search(q = entry[0], limit=3, type ='artist')
+        artist_uri = artist_data['artists']['items'][0]['uri']
+        artist_tracks = sp.artist_top_tracks(artist_uri)
+        artist_audio_link = artist_tracks['tracks'][0]['preview_url']
+
+        artist_name = artist_tracks['tracks'][0]['artists'][0]['name']
+        new_array.append(artist_name)
+
+        new_array.append(artist_audio_link)
+    return new_array
 
 
 

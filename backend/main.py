@@ -65,6 +65,9 @@ def save_genres(db: Session = Depends(get_db)):
 def save_images(db: Session = Depends(get_db)):
     return utils.save_images(db=db)
 
+@app.get("/play_button")
+def play_button(db: Session = Depends(get_db)):
+    return utils.play_button(db=db)
     
 
 # if __name__ == "__main__":
