@@ -13,11 +13,12 @@ const WidgetsPage = (props) => {
   const [startYear, setStartYear] = useState(2021);
   const [endYear, setEndYear] = useState(2021);
   const [selectedMonth, setSelectedMonth] = useState("2021-12");
-
-  // console.log((selectedMonth))
+  const [isLoading, setIsLoading] = useState(false);
+ 
 
   const fetchData = useCallback(async () => {
-    const response = await fetch("http://192.168.178.26:8000/");
+    setIsLoading(true);
+    const response = await fetch("http://localhost:8000/");
     const data = await response.json();
     setAllData(data);
     setFilteredData(
@@ -28,6 +29,8 @@ const WidgetsPage = (props) => {
         })
         .slice(0, 6)
     );
+    setIsLoading(false);
+    
   }, []);
 
   useEffect(() => {
@@ -52,33 +55,6 @@ const WidgetsPage = (props) => {
     }
     return genresArray;
   };
-
-  const getDataArray = (allData, startYear, endYear) => {
-    
-    let years = [];
-      for(let year = startYear; year <= endYear; year++){
-      years.push(year.toString())
-    }
-
-  
-
-    let dataArray = [];
-    const genres = getGenresArray(filteredData);
-    for (const year of years) {
-      for(const genre of genres){
-      dataArray.push(
-        allData.filter(
-          (data) => data.genre === genre && data.date.includes(year)
-        )
-      
-      );  
-    }
- 
-  }
-  
-    return dataArray;
-  };
-
 
 
   const prevPageClickHandler = () => {
@@ -125,7 +101,6 @@ const WidgetsPage = (props) => {
       6;
     return Math.ceil(length) - 1;
   };
-
 
 
   const selectStartYearHandler = (event) => {
@@ -178,6 +153,7 @@ const WidgetsPage = (props) => {
           </div>
 
           <div className="statsbygenre__container">
+            {isLoading && <h1>Loading...</h1>} 
             {props.showHomePage &&
               filteredData.map((item, index) => {
                 return (
