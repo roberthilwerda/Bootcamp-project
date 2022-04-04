@@ -1,6 +1,7 @@
 import billboard
 from numpy import NaN 
-import spotipy 
+import spotipy
+import spotipy.util as util 
 from spotipy.oauth2 import SpotifyClientCredentials
 from sqlalchemy.orm import Session
 from sqlalchemy import update
