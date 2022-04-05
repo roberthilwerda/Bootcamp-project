@@ -1,6 +1,7 @@
 from uuid import UUID
 from pydantic import BaseModel
 from typing import Optional
+from datetime import datetime
 
 class RawData(BaseModel):
     id: Optional[str]
@@ -16,12 +17,13 @@ class RawData(BaseModel):
 
 class ManipulatedData(BaseModel):
     id: int
-    date: str
+    date: datetime
     genre: str
-    rank_aggregate = float
-    count = int
-    image_url = str
-    date_index = int
+    rank_aggregate: float
+    previous_rank_aggregate: float
+    growth: float
+    image_url :str
+   
 
 
     class Config:

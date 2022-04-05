@@ -1,6 +1,5 @@
-from msilib import schema
 from fastapi import FastAPI, Depends, HTTPException
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 import uvicorn
 # import bboard
@@ -41,6 +40,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def all_data(db: Session = Depends(get_db)):
     return utils.get_all(db=db)
@@ -65,7 +65,7 @@ def save_genres(db: Session = Depends(get_db)):
 def save_images(db: Session = Depends(get_db)):
     return utils.save_images(db=db)
 
-    
+  
 
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="localhost", port=8000)
