@@ -65,11 +65,7 @@ def save_genres(db: Session = Depends(get_db)):
 def save_images(db: Session = Depends(get_db)):
     return utils.save_images(db=db)
 
-    
-
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="localhost", port=8000)
-
-def resolve_growth_rate(data, db: Session = Depends(get_db)):
-    entries = utils.get_all(db=db)
-    print(entries)
+@app.get("/get_all_enhanced")
+def resolve_growth_rate(db: Session = Depends(get_db)):
+    return utils.get_all_enhanced(db=db)
+  

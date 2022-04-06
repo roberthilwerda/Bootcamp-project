@@ -107,7 +107,8 @@
 }
 
 .growth_indicator {
-  width: 5rem;
+  width: 6rem;
+  font-weight: 700;
   display:flex;
   /* border: 2px solid rosybrown; */
   align-items: center;
