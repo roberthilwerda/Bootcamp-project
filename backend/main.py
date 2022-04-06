@@ -26,9 +26,9 @@ def get_db():
 ## CORS block of browser workaround
 origins = [
     "http://localhost",
-    # "192.168.178.16",
-    # "https://192.168.178.16",
-    "http://192.168.178.26:3000",
+    # "192.168.1.58:3000",
+    "http://192.168.1.58:3000",
+    "http://192.168.1.58:3000",
     "http://localhost:3000",
     "https://localhost:3000",
 ]

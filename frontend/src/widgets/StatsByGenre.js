@@ -40,6 +40,13 @@ const StatsByGenre = (props) => {
             {ranking}. {capitalize(genre)}{" "}
           </p>
 
+          <div className="play__icon-container"><img
+              className="play__icon"
+              alt=""
+              width="35px"
+              src={require("../img/icon-play.png")}
+            /></div>
+
           <div className="growth_indicator">
             <img
               className="growth_indicator__icon"
