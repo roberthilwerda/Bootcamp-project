@@ -18,7 +18,7 @@ const WidgetsPage = (props) => {
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
-    const response = await fetch("http://localhost:8000/");
+    const response = await fetch("http://localhost:8000/get_all_enhanced");
     const data = await response.json();
     setAllData(data);
     setFilteredData(
@@ -163,6 +163,7 @@ const WidgetsPage = (props) => {
                     genre={item.genre}
                     imageUrl={item.image_url}
                     onClickHandler={() => showComponent(item.genre)}
+                    growth={item.growth}
                   />
                 );
               })}
