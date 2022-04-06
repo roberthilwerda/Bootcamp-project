@@ -44,9 +44,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def all_data(db: Session = Depends(get_db)):
-    return utils.get_all(db=db)
+@app.get("/", response_model=schemas.PopularGenre)
+def all_data(limit: int = 6, year: int = 2021, month: int = 12, db: Session = Depends(get_db)):
+    genres = crud.get_popular_genres(db, limit, datetime(year, month, 1))
 
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):
@@ -68,65 +68,10 @@ def save_genres(db: Session = Depends(get_db)):
 def save_images(db: Session = Depends(get_db)):
     return utils.save_images(db=db)
 
-@app.get("/search/{genre}")
-def get_genre_trend(genre: str, date_from: str, date_to: str, db: Session = Depends(get_db)):
-    # most_recent_date = db.query(models.RawData.date).order_by(models.RawData.date.desc()).first()
-    # three_months_before = most_recent_date[0] - relativedelta(months=3)
-    date_from = datetime.strptime(date_from, "%Y-%m-%d")
-    date_to = datetime.strptime(date_to, "%Y-%m-%d")
-    results = db.query(models.RawData).\
-        where(models.RawData.date >= date_from).\
-        where(models.RawData.date <= date_to).\
-        where(models.RawData.genre == genre).\
-        order_by(models.RawData.date.desc()).all()
-    return results
+@app.get("/{genre}")
+def get_genre_trend(genre: str, db: Session = Depends(get_db)):
+    return crud.get_genre_history(genre, db)
 
-@app.get("/get_6_popular_genres")
-def get_popular_genres(db: Session = Depends(get_db)):
-    genres = db.execute(text("""
-        SELECT
-            genre,
-            MIN(date) as date,
-            SUM(1/CBRT(raw_data.rank)) AS weighted_rank,
-            LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC),
-            LEAD(SUM(1/CBRT(raw_data.rank)), 1) OVER(
-                PARTITION BY genre
-                ORDER BY date DESC) AS previous_weighted_rank,
-            date_part('month', AGE(MIN(date), LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC))) as diff_months
-
-        FROM raw_data
-        GROUP BY date, genre
-        ORDER BY date DESC, weighted_rank DESC
-        LIMIT 6
-        """)).all()
-    return genres
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
-
-
-## Query to get the top 6 of every month
-"""
-WITH results AS (
-	SELECT
-		genre,
-		MIN(date) as date,
-		SUM(1/CBRT(raw_data.rank)) AS weighted_rank,
-		LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC),
-		LEAD(SUM(1/CBRT(raw_data.rank)), 1) OVER(
-			PARTITION BY genre
-			ORDER BY date DESC) AS previous_weighted_rank,
-		date_part('month', AGE(MIN(date), LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC))) as diff_months,
-		rank() OVER (PARTITION BY date ORDER BY SUM(1/CBRT(raw_data.rank)) DESC) as ranking
-	FROM raw_data
-	GROUP BY date, genre
-	ORDER BY date DESC, weighted_rank DESC
-)
-SELECT results.date, results.genre, weighted_rank, previous_weighted_rank,((weighted_rank-previous_weighted_rank)/(previous_weighted_rank))/(diff_months) * 100 as growth,ranking,
-FROM results
-WHERE results.ranking < 7
-
-
-
-
-"""
