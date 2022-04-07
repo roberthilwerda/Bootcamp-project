@@ -18,17 +18,11 @@ const WidgetsPage = (props) => {
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
-    const response = await fetch("http://localhost:8000/get_all_enhanced");
+    const response = await fetch("http://localhost:8000/");
     const data = await response.json();
+    console.log(data)
     setAllData(data);
-    setFilteredData(
-      data
-        .filter((genre) => genre.date === `${selectedMonth}-01`)
-        .sort(function (a, b) {
-          return b.rank_aggregate - a.rank_aggregate;
-        })
-        .slice(0, 6)
-    );
+    setFilteredData(data);
     setIsLoading(false);
     
   }, []);
@@ -80,19 +74,27 @@ const WidgetsPage = (props) => {
     setPagination(pagination + 1);
   };
 
-  const changeMonthHandler = (event) => {
+  const changeMonthHandler = async (event) => {
     const newMonth = event.target.value;
     setPagination(0);
     setSelectedMonth(newMonth);
+    setIsLoading(true);
+    let [year, month] = newMonth.split('-')
+    const response = await fetch("http://localhost:8000/?month="+month+"&year="+year);
+    const data = await response.json();
+    console.log(data)
+    setAllData(data);
+    setFilteredData(data);
+    setIsLoading(false);
 
-    setFilteredData(
-      allData
-        .filter((genre) => genre.date === `${event.target.value}-01`)
-        .sort(function (a, b) {
-          return b.rank_aggregate - a.rank_aggregate;
-        })
-        .slice(0, 6)
-    );
+    // setFilteredData(
+    //   allData
+    //     .filter((genre) => genre.date === `${event.target.value}-01`)
+    //     .sort(function (a, b) {
+    //       return b.rank_aggregate - a.rank_aggregate;
+    //     })
+    //     .slice(0, 6)
+    // );
   };
 
   const numOfPages = (allData) => {
