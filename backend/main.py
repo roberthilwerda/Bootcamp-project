@@ -29,9 +29,9 @@ def get_db():
 ## CORS block of browser workaround
 origins = [
     "http://localhost",
-    # "192.168.178.16",
-    # "https://192.168.178.16",
-    "http://192.168.178.26:3000",
+    # "192.168.1.58:3000",
+    "http://192.168.1.58:3000",
+    "http://192.168.1.58:3000",
     "http://localhost:3000",
     "https://localhost:3000",
 ]
@@ -90,3 +90,7 @@ def get_genre_trend(genre: str, db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
+@app.get("/get_all_enhanced")
+def resolve_growth_rate(db: Session = Depends(get_db)):
+    return utils.get_all_enhanced(db=db)
+  

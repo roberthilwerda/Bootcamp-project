@@ -1,9 +1,10 @@
 import billboard
 from numpy import NaN 
-import spotipy 
+import spotipy
+import spotipy.util as util 
 from spotipy.oauth2 import SpotifyClientCredentials
 from sqlalchemy.orm import Session
-from sqlalchemy import update
+from sqlalchemy import update, text
 from . import models, crud
 from datetime import datetime, timedelta
 import numpy as np
@@ -70,6 +71,27 @@ def get_all(db: Session):
     ## function that transforms the manipulated Data table to pandas dataframe
     ## function that calculates the trend, based on growth compared to previous month
     return db.query(models.ManipulatedData).all()
+
+
+def get_all_enhanced(db: Session):
+
+    ## function that transforms the manipulated Data table to pandas dataframe
+    ## function that calculates the trend, based on growth compared to previous month
+    return db.execute(text(
+        """
+        with cte as (select date, genre, rank_aggregate,image_url,
+        lag(rank_aggregate,1) over (partition by genre order by date) previous_rank_aggregate,
+        date_part('month', AGE(MIN(date), LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC))) as diff_months
+        from public.manipulated_data
+        GROUP BY date, genre,rank_aggregate,image_url
+        order by date desc, rank_aggregate desc)
+        SELECT date, genre, rank_aggregate, previous_rank_aggregate,
+        ((rank_aggregate-previous_rank_aggregate)/NULLIF(previous_rank_aggregate,0))/NULLIF(diff_months,0) * 100 as growth,
+        image_url
+        from cte 
+        order by date desc
+        """
+        )).all()
 
 
 def get_image(db, genre):

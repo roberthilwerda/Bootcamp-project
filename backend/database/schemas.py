@@ -3,6 +3,7 @@ from uuid import UUID
 from matplotlib import dates
 from pydantic import BaseModel
 from typing import Optional
+from datetime import datetime
 
 class PopularGenre(BaseModel):
     genre: str
@@ -33,11 +34,13 @@ class RawData(BaseModel):
 
 class ManipulatedData(BaseModel):
     id: int
-    date: str
+    date: datetime
     genre: str
     rank_aggregate = float
-    count = int
-    image_url = str
+    previous_rank_aggregate: float
+    growth: float
+    image_url: str
+
 
 
     class Config:
