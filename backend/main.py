@@ -44,9 +44,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/", response_model=schemas.PopularGenre)
+@app.get("/", response_model=list[schemas.PopularGenre])
 def all_data(limit: int = 6, year: int = 2021, month: int = 12, db: Session = Depends(get_db)):
-    genres = crud.get_popular_genres(db, limit, datetime(year, month, 1))
+    date = datetime(year, month, 1)
+    genres = crud.get_popular_genres(db, limit, date)
+    output = []
+    for genre in genres:
+        urls = crud.get_urls(genre[0], date, db)
+        output.append({
+            "genre": genre[0],
+            "date": genre[1],
+            "weighted_rank": genre[2],
+            "previous_date": genre[3],
+            "previous_weighted_rank": genre[4],
+            "diff_months": genre[5],
+            "external_url": urls[0][0],
+            "image_url": urls[0][1]
+        })
+    return output
 
 @app.get("/populate_database")
 def populate_database(db: Session = Depends(get_db)):

@@ -1,12 +1,23 @@
-from datetime import datetime
+from datetime import date
 from uuid import UUID
+from matplotlib import dates
 from pydantic import BaseModel
 from typing import Optional
 
 class PopularGenre(BaseModel):
     genre: str
-    date: datetime
-    
+    date: date
+    weighted_rank: float
+    previous_date: date
+    previous_weighted_rank: float
+    diff_months: int
+    external_url: str
+    image_url: str
+
+class GenreHistory(BaseModel):
+    genre: str
+    dates: list[date]
+    weighted_ranks: list[float]
 
 class RawData(BaseModel):
     id: Optional[str]

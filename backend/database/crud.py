@@ -6,13 +6,12 @@ from datetime import datetime
 
 def get_popular_genres(db: Session, limit, date: datetime = datetime.today()):
     date = date.replace(day=1)
-    date_string = date.strftime("%Y-%m-%d")
     genres = db.execute(text("""
         SELECT
             genre,
             MIN(date) as date,
             SUM(1/CBRT(raw_data.rank)) AS weighted_rank,
-            LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC),
+            LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC) as previous_date,
             LEAD(SUM(1/CBRT(raw_data.rank)), 1) OVER(
                 PARTITION BY genre
                 ORDER BY date DESC) AS previous_weighted_rank,
@@ -35,6 +34,15 @@ def get_genre_history(genre: str, db: Session):
         ORDER BY date DESC
         """), {"genre": genre}).all()
     return history
+
+def get_urls(genre: str, date: datetime, db: Session):
+    return db.execute(text("""
+        SELECT external_url, image_url
+        FROM raw_data
+        WHERE genre = :genre AND date = :date
+        ORDER BY rank ASC
+        LIMIT 1"""), {"genre": genre, "date": date}).all()
+    
 
 def get_all_genres(db: Session):
     genres = db.query(models.Genre).all()
