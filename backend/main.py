@@ -11,7 +11,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from database import crud, models, schemas, utils
 from database.database import SessionLocal, engine
-from datetime import datetime
+from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
 
@@ -63,34 +63,24 @@ def all_data(limit: int = 6, year: int = 2021, month: int = 12, db: Session = De
         })
     return output
 
-@app.get("/populate_database")
-def populate_database(db: Session = Depends(get_db)):
-    return utils.populate_database_all(db=db)
 
-@app.get("/populate_database_manual/{date}")
-def populate_database_manual(date: str, db: Session = Depends(get_db)):
-    return utils.populate_database(db=db, date=date)
-
-@app.get("/populate_database_all")
-def populate_database_all(db: Session = Depends(get_db)):
-    return utils.populate_database_all(db=db)
-
-@app.get("/save_genres")
-def save_genres(db: Session = Depends(get_db)):
-    return utils.save_genres(db=db)
-
-@app.get("/save_images")
-def save_images(db: Session = Depends(get_db)):
-    return utils.save_images(db=db)
-
-@app.get("/{genre}")
+@app.get("/{genre}", response_model=schemas.GenreHistory)
 def get_genre_trend(genre: str, db: Session = Depends(get_db)):
-    return crud.get_genre_history(genre, db)
+    history = crud.get_genre_history(genre, db)
+    if not history: genre = "genre not found"
+    plots = []
+    for plot in history:
+        plots.append({
+            "date": plot[0],
+            "weighted_rank": plot[1]
+        })
+    return {
+        "genre": genre,
+        "data": plots
+    }
 
 
+
+  
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
-@app.get("/get_all_enhanced")
-def resolve_growth_rate(db: Session = Depends(get_db)):
-    return utils.get_all_enhanced(db=db)
-  
