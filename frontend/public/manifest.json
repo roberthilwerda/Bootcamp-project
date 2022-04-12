@@ -4,10 +4,23 @@
   "icons": [
     {
       "src": "favicon.ico",
+<<<<<<< HEAD
       "sizes": "48x48",
+=======
+      "sizes": "48x48 32x32 24x24 16x16",
+>>>>>>> 29f7a60ab085b8da9ef510653398ee27878bc7eb
       "type": "image/x-icon"
     }
+<<<<<<< HEAD
 
   ]
 
 }
+=======
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+>>>>>>> 29f7a60ab085b8da9ef510653398ee27878bc7eb

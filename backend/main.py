@@ -26,6 +26,7 @@ def get_db():
 ## CORS block of browser workaround
 origins = [
     "http://localhost",
+<<<<<<< HEAD
     "192.168.1.53:3000",
     "192.168.1.60:3000",
     "http://192.168.1.53:3000",
@@ -35,6 +36,11 @@ origins = [
     # "192.168.178.16",
     # "https://192.168.178.16",
     "http://192.168.178.26:3000",
+=======
+    # "192.168.1.58:3000",
+    "http://192.168.1.58:3000",
+    "http://192.168.1.58:3000",
+>>>>>>> 29f7a60ab085b8da9ef510653398ee27878bc7eb
     "http://localhost:3000",
     "https://localhost:3000",
 ]
@@ -71,11 +77,7 @@ def save_genres(db: Session = Depends(get_db)):
 def save_images(db: Session = Depends(get_db)):
     return utils.save_images(db=db)
 
-    
-
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="localhost", port=8000)
-
-def resolve_growth_rate(data, db: Session = Depends(get_db)):
-    entries = utils.get_all(db=db)
-    print(entries)
+@app.get("/get_all_enhanced")
+def resolve_growth_rate(db: Session = Depends(get_db)):
+    return utils.get_all_enhanced(db=db)
+  
