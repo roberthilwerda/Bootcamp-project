@@ -36,7 +36,7 @@ const Header = (props) => {
             <h4>Home</h4>
           </div>
           <div className="header__item">
-            <h4>Get Trends</h4>
+            <h4>Geet Trends</h4>
           </div>
           <div className="header__item">
             <h4>Contact</h4>
