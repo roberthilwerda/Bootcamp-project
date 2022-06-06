@@ -9,6 +9,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/fastapi-app
+
+  ##TODO: Add volume for backend files ./database:/app/backend
 
   frontend:
     image: rhilwerda/gentrend-frontend

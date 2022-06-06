@@ -1,8 +1,7 @@
-
-
 backend/__pycache__/
 .DS_Store
 .cache
 .vscode
 backend/.cache
 backend/database/.cache
+backend/.env
