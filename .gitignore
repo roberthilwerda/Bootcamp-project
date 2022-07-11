@@ -5,3 +5,6 @@ backend/__pycache__/
 backend/.cache
 backend/database/.cache
 backend/.env
+backend/venv
+frontend/node_modules
+frontend/package-lock.json

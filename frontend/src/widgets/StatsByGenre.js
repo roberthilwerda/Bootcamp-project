@@ -1,5 +1,6 @@
 import "./StatsByGenre.css";
 import React from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function capitalize(string) {
   try {
@@ -49,11 +50,17 @@ const StatsByGenre = (props) => {
   const ranking = props.ranking;
   const growth = props.growth;
 
+  const navigate = useNavigate();
+
+  const clickHandler = (genre) => {
+    navigate(`/genre-detail/${genre}`)
+  }
+
   return (
     <div
       className="black_container"
       onClick={() => {
-        props.onClickHandler(genre);
+        clickHandler(genre);
       }}
     >
       <div className="bg-container">
