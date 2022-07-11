@@ -214,26 +214,4 @@ const Homepage = (props) => {
   );
 };
 
-// const showGenrePageContent = (genre) => {
-//   return (
-//     <div className="widgetspage__wrapper">
-//       <GenrePage
-//         data={allData.filter((data) => data.genre === genre)}
-//         filteredData={filteredData}
-//         startYear={startYear}
-//         endYear={endYear}
-//         genre={genre}
-//         goBack={goBackClickHandler}
-//       />
-//     </div>
-//   );
-// };
-
-//   if (props.showHomePage) {
-//     return showHomePageContent();
-//   } else {
-//     return showGenrePageContent(selectedGenre);
-//   }
-// };
-
 export default Homepage;

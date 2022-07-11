@@ -1,5 +1,8 @@
+import Facebook from "../components/Facebook";
+
 const Login = () => {
-    return <div>LOGIN</div>
+    
+    return <Facebook />
 }
 
 export default Login;

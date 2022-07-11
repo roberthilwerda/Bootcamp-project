@@ -78,10 +78,6 @@ const transformDataToArray = (data, startYear, endYear) => {
   let dataArray = [];
   let dates = getDates(startYear, endYear);
 
-  console.log(data)
-  console.log(startYear)
-  console.log(endYear)
-
   for (let i = 0; i < dates.length; i++) {
     try {
       dataArray[i] = data.filter(
@@ -103,9 +99,6 @@ const ChartGenre = (props) => {
   const endYear = state.genre.selectedEndYear;
   // const allData = state.genre.allData.filter((data) => data.genre === genre);
   const allData = state.genre.allData;
-
-  console.log(allData)
-  console.log(genre)
 
   let data;
   if (props.mode === "single") {
