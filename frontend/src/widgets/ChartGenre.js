@@ -1,5 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { useSelector } from "react-redux";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -72,10 +73,14 @@ const getDates = (startYear, endYear) => {
   return dates;
 };
 
-const transformDataToArray = (data, startYear, endYear, genre) => {
+const transformDataToArray = (data, startYear, endYear) => {
 
   let dataArray = [];
   let dates = getDates(startYear, endYear);
+
+  console.log(data)
+  console.log(startYear)
+  console.log(endYear)
 
   for (let i = 0; i < dates.length; i++) {
     try {
@@ -92,10 +97,15 @@ const transformDataToArray = (data, startYear, endYear, genre) => {
 };
 
 const ChartGenre = (props) => {
-  const allData = props.data;
+  const state = useSelector((state) => state)
+  const genre = state.genre.selectedGenre;
+  const startYear = state.genre.selectedStartYear;
+  const endYear = state.genre.selectedEndYear;
+  // const allData = state.genre.allData.filter((data) => data.genre === genre);
+  const allData = state.genre.allData;
 
-
-  // console.log(transformDataToArray("single", allData, props.startYear, props.endYear))
+  console.log(allData)
+  console.log(genre)
 
   let data;
   if (props.mode === "single") {
@@ -103,16 +113,16 @@ const ChartGenre = (props) => {
       labels: getLabels(props.startYear, props.endYear),
       datasets: [
         {
-          label: `Popularity index of ${capitalize(props.genre)}`,
+          label: `Popularity index of ${capitalize(genre)}`,
           fill: true,
           lineTension: 0.5,
           backgroundColor: "wheat",
           borderColor: "wheat",
           borderWidth: 2,
           data: transformDataToArray(
-            allData,
-            props.startYear,
-            props.endYear
+            allData.filter(data => data.genre === genre),
+            startYear,
+            endYear
             // props.genre
           ),
         },
@@ -120,7 +130,7 @@ const ChartGenre = (props) => {
     };
   } else {
     data = {
-      labels: getLabels(props.startYear, props.endYear),
+      labels: getLabels(startYear, endYear),
 
       datasets: [
         {
@@ -132,9 +142,8 @@ const ChartGenre = (props) => {
           borderWidth: 2,
           data: transformDataToArray(
             allData.filter(data => data.genre === props.genreArray[0]),
-            props.startYear,
-            props.endYear,
-            // props.genreArray[0]
+            startYear,
+            endYear,
           ),
         },
         {
@@ -146,9 +155,8 @@ const ChartGenre = (props) => {
           borderWidth: 2,
           data: transformDataToArray(
             allData.filter(data => data.genre === props.genreArray[1]),
-            props.startYear,
-            props.endYear,
-            // props.genreArray[1]
+            startYear,
+            endYear,
           ),
         },
         {
@@ -160,9 +168,8 @@ const ChartGenre = (props) => {
           borderWidth: 2,
           data: transformDataToArray(
             allData.filter(data => data.genre === props.genreArray[2]),
-            props.startYear,
-            props.endYear,
-            props.genreArray[2]
+            startYear,
+            endYear,
           ),
         },
         {
@@ -174,9 +181,8 @@ const ChartGenre = (props) => {
           borderWidth: 2,
           data: transformDataToArray(
             allData.filter(data => data.genre === props.genreArray[3]),
-            props.startYear,
-            props.endYear,
-            props.genreArray[3]
+            startYear,
+            endYear,
           ),
         },
         {
@@ -188,9 +194,8 @@ const ChartGenre = (props) => {
           borderWidth: 2,
           data: transformDataToArray(
             allData.filter(data => data.genre === props.genreArray[4]),
-            props.startYear,
-            props.endYear,
-            props.genreArray[4]
+            startYear,
+            endYear,
           ),
         },
         {
@@ -202,9 +207,8 @@ const ChartGenre = (props) => {
           borderWidth: 2,
           data: transformDataToArray(
             allData.filter(data => data.genre === props.genreArray[5]),
-            props.startYear,
-            props.endYear,
-            props.genreArray[5]
+            startYear,
+            endYear,
           ),
         },
       ],

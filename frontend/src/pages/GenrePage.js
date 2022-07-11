@@ -1,6 +1,7 @@
 import "./GenrePage.css";
 import ChartGenre from "../widgets/ChartGenre";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function capitalize(string) {
   try {
@@ -11,16 +12,18 @@ function capitalize(string) {
 }
 
 const GenrePage = (props) => {
+  const state = useSelector((state) => state)
+  const startYear = state.genre.selectedStartYear;
+  const endYear = state.genre.selectedEndYear;
   const navigate = useNavigate();
-  const location = useLocation();
-  const data = props.data.filter((data) => data.genre === props.genre)
 
-  const params = useParams();
-  console.log(params.genre)
+  const goBackHandler = () => {
+    navigate('/')
+  }
 
   return (
     <div className="genre_page__wrapper">
-      <div className="genre_page__back" onClick={props.goBack}>
+      <div className="genre_page__back" onClick={goBackHandler}>
         <div className="genre_page__back-icon">Go back</div>
       </div>
 
@@ -32,11 +35,9 @@ const GenrePage = (props) => {
         <div className="genre_page__chart">
           <div className="genre_page__chart-content">
             <ChartGenre
-              genre={props.genre}
-              startYear={props.startYear}
-              endYear={props.endYear}
+              startYear={startYear}
+              endYear={endYear}
               mode={"single"}
-              data={data}
             />
           </div>
         </div>

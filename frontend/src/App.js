@@ -1,8 +1,8 @@
 import "./App.css";
 import Homepage from "./pages/Homepage";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
 import GenrePage from "./pages/GenrePage";

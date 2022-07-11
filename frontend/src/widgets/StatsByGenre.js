@@ -1,6 +1,8 @@
 import "./StatsByGenre.css";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { genreActions } from "../store/genre-slice";
 
 function capitalize(string) {
   try {
@@ -45,6 +47,7 @@ function showGrowth(growth) {
 }
 
 const StatsByGenre = (props) => {
+  const dispatch = useDispatch();
   const genre = props.genre;
   const imageUrl = props.imageUrl;
   const ranking = props.ranking;
@@ -53,6 +56,7 @@ const StatsByGenre = (props) => {
   const navigate = useNavigate();
 
   const clickHandler = (genre) => {
+    dispatch(genreActions.changeSelectedGenre(genre))
     navigate(`/genre-detail/${genre}`)
   }
 

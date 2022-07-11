@@ -3,38 +3,44 @@ import StatsByGenre from "../widgets/StatsByGenre";
 import ChartGenre from "../widgets/ChartGenre";
 import InfoWidget from "../widgets/InfoWidget";
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import GenrePage from "./GenrePage";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Monthpicker from "../widgets/Monthpicker";
+import { genreActions } from "../store/genre-slice";
 
 const Homepage = (props) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const startYear = state.genre.selectedStartYear;
+  const endYear = state.genre.selectedEndYear;
 
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState("");
   const [page, setPage] = useState(0);
-  const [startYear, setStartYear] = useState(2021);
-  const [endYear, setEndYear] = useState(2021);
+
   const [selectedMonth, setSelectedMonth] = useState("2021-12");
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
-    const response = await fetch("http://localhost:8000/get_all_enhanced");
-    const data = await response.json();
-    setAllData(data);
+
+    // const response = await fetch("http://localhost:8000/get_all_enhanced");
+    // const data = await response.json();
+
+    setAllData(state.genre.allData);
+
     setFilteredData(
-      data
+      allData
         .filter((genre) => genre.date === `${selectedMonth}-01`)
         .sort(function (a, b) {
           return b.rank_aggregate - a.rank_aggregate;
         })
         .slice(0, 6)
     );
+
     setIsLoading(false);
-  }, [selectedMonth]);
+  }, [selectedMonth, allData, state.genre.allData]);
 
   useEffect(() => {
     fetchData();
@@ -78,6 +84,7 @@ const Homepage = (props) => {
   const changeMonthHandler = (event) => {
     const newMonth = event.target.value;
     setPage(0);
+
     setSelectedMonth(newMonth);
 
     setFilteredData(
@@ -96,19 +103,18 @@ const Homepage = (props) => {
   };
 
   const selectStartYearHandler = (event) => {
-    setStartYear(event.target.value);
+    dispatch(genreActions.changeSelectedStartYear(event.target.value));
   };
 
   const selectEndYearHandler = (event) => {
-    setEndYear(event.target.value);
+    dispatch(genreActions.changeSelectedEndYear(event.target.value));
   };
 
   return (
     <div className="widgetspage__wrapper">
       <div className="widgetspage__col-genres">
         <div style={{ fontSize: 20 }} className="widgetspage__title">
-
-        <Monthpicker selectedMonth={selectedMonth} changeMonthHandler={changeMonthHandler} />
+          <Monthpicker selectedMonth={selectedMonth} changeMonthHandler={changeMonthHandler} />
 
           <div className="genrecards__title">
             <p>Most popular genres</p>
@@ -132,23 +138,24 @@ const Homepage = (props) => {
               onClick={nextPageClickHandler}
             />
           </div>
-
         </div>
 
         <div className="statsbygenre__container">
-          {isLoading && <h1>Loading...</h1>}
-
-          {!isLoading && filteredData.map((item, index) => {
-            return (
-              <StatsByGenre
-                key={item.id}
-                ranking={6 * page + index + 1}
-                genre={item.genre}
-                imageUrl={item.image_url}
-                growth={item.growth}
-              />
-            );
-          })}
+          {isLoading || state.genre.allData.length === 0 ? (
+            <h1>Loading...</h1>
+          ) : (
+            filteredData.map((item, index) => {
+              return (
+                <StatsByGenre
+                  key={item.id}
+                  ranking={6 * page + index + 1}
+                  genre={item.genre}
+                  imageUrl={item.image_url}
+                  growth={item.growth}
+                />
+              );
+            })
+          )}
         </div>
       </div>
 
@@ -196,8 +203,6 @@ const Homepage = (props) => {
         <div className="chartinfo__container">
           <ChartGenre
             mode={"multiple"}
-            startYear={startYear}
-            endYear={endYear}
             data={allData}
             genreArray={getGenresArray(filteredData)}
             goBack={goBackClickHandler}
