@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./Header.css";
+import { useSelector } from "react-redux";
+import Facebook from "../components/Facebook";
 
 const Header = (props) => {
   const [showMenuItems, setShowMenuItems] = useState(false);
-
+  const state = useSelector((state) => state);
   const clickHandler = () => {
     showMenuItems ? setShowMenuItems(false) : setShowMenuItems(true);
   };
@@ -12,12 +14,7 @@ const Header = (props) => {
     <div className="header__wrapper">
       <div className="header__logo-area">
         <div>
-          
-          <img
-            className={`header__logo`}
-            alt=""
-            src={require("./images/gtlogo.png")}
-          />
+          <img className={`header__logo`} alt="" src={require("./images/gtlogo.png")} />
         </div>
       </div>
 
@@ -42,6 +39,10 @@ const Header = (props) => {
             <h4>Contact</h4>
           </div>
         </div>
+      </div>
+
+      <div className="header__settings-area">
+        <Facebook />
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import Homepage from "./pages/Homepage";
 import { useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
 import GenrePage from "./pages/GenrePage";
 import { fetchData } from "./store/genre-actions";
@@ -20,11 +19,10 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<Homepage />} exact />
+            <Route path="/" element={<Homepage />}  />
 
-            <Route path="/login" element={<Login />} exact />
 
-            <Route path="/genre-detail/:genre" element={<GenrePage />} exact />
+            <Route path="/genre-detail/:genre" element={<GenrePage />}  />
           </Routes>
         </Layout>
       </BrowserRouter>
