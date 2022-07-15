@@ -123,7 +123,6 @@ const ChartGenre = (props) => {
       ],
     };
   } else {
-    console.log(chartData)
     data = {
       labels: getLabels(startYear, endYear),
 
