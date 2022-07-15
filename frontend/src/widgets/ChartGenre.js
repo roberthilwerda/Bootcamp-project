@@ -97,10 +97,11 @@ const ChartGenre = (props) => {
   const genre = state.genre.selectedGenre;
   const startYear = state.genre.selectedStartYear;
   const endYear = state.genre.selectedEndYear;
-  // const allData = state.genre.allData.filter((data) => data.genre === genre);
-  const allData = state.genre.allData;
 
+  const chartData = props.data
+ 
   let data;
+
   if (props.mode === "single") {
     data = {
       labels: getLabels(props.startYear, props.endYear),
@@ -113,7 +114,7 @@ const ChartGenre = (props) => {
           borderColor: "wheat",
           borderWidth: 2,
           data: transformDataToArray(
-            allData.filter(data => data.genre === genre),
+            chartData,
             startYear,
             endYear
             // props.genre
@@ -122,6 +123,7 @@ const ChartGenre = (props) => {
       ],
     };
   } else {
+    console.log(chartData)
     data = {
       labels: getLabels(startYear, endYear),
 
@@ -134,7 +136,7 @@ const ChartGenre = (props) => {
           borderColor: "goldenrod",
           borderWidth: 2,
           data: transformDataToArray(
-            allData.filter(data => data.genre === props.genreArray[0]),
+            chartData.filter(data => data.genre === props.genreArray[0]),
             startYear,
             endYear,
           ),
@@ -147,7 +149,7 @@ const ChartGenre = (props) => {
           borderColor: "silver",
           borderWidth: 2,
           data: transformDataToArray(
-            allData.filter(data => data.genre === props.genreArray[1]),
+            chartData.filter(data => data.genre === props.genreArray[1]),
             startYear,
             endYear,
           ),
@@ -160,7 +162,7 @@ const ChartGenre = (props) => {
           borderColor: "brown",
           borderWidth: 2,
           data: transformDataToArray(
-            allData.filter(data => data.genre === props.genreArray[2]),
+            chartData.filter(data => data.genre === props.genreArray[2]),
             startYear,
             endYear,
           ),
@@ -173,7 +175,7 @@ const ChartGenre = (props) => {
           borderColor: "rgba(75,192,192,1)",
           borderWidth: 2,
           data: transformDataToArray(
-            allData.filter(data => data.genre === props.genreArray[3]),
+            chartData.filter(data => data.genre === props.genreArray[3]),
             startYear,
             endYear,
           ),
@@ -186,7 +188,7 @@ const ChartGenre = (props) => {
           borderColor: "rgba(192,192,192,1)",
           borderWidth: 2,
           data: transformDataToArray(
-            allData.filter(data => data.genre === props.genreArray[4]),
+            chartData.filter(data => data.genre === props.genreArray[4]),
             startYear,
             endYear,
           ),
@@ -199,7 +201,7 @@ const ChartGenre = (props) => {
           borderColor: "rgba(101,56,192,1)",
           borderWidth: 2,
           data: transformDataToArray(
-            allData.filter(data => data.genre === props.genreArray[5]),
+            chartData.filter(data => data.genre === props.genreArray[5]),
             startYear,
             endYear,
           ),

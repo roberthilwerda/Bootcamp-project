@@ -34,3 +34,6 @@ class Genre(Base):
     genre = Column(String)
     image_url = Column(String)
 
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)

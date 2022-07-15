@@ -16,6 +16,7 @@ const Facebook = () => {
 
   const responseFacebook = (response) => {
     if (response.userID) {
+      
       dispatch(
         authActions.setCredentials({
           accessToken: response.accessToken,
@@ -61,13 +62,12 @@ const Facebook = () => {
     );
   }
 
+  
+
   return (
     <div>
       {fbContent}
 
-      {/* {state.isLoggedIn ? <div>User logged in
-        <img src={state.picture} alt='pic'></img>
-      </div> : <div>User is not logged in.</div>} */}
     </div>
   );
 };

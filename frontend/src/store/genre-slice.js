@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const genreSlice = createSlice({
   name: "genre",
   initialState: {
-    allData: [],
+    data: [],
     selectedGenre: "",
     selectedStartYear: 2021,
     selectedEndYear: 2021,
   },
   reducers: {
-    replaceAllData(state, action) {
-      state.allData = action.payload.allData;
+    setData(state, action) {
+      state.data = action.payload;
     },
     changeSelectedGenre(state, action) {
       state.selectedGenre = action.payload;

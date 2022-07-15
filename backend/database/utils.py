@@ -97,6 +97,12 @@ def get_all_enhanced(db: Session):
         """
         )).all()
 
+def get_genre_detail(genre, db: Session):
+    print(genre)
+    return db.query(models.ManipulatedData).filter(
+        models.ManipulatedData.genre == genre
+    ).all()
+
 
 def get_image(db, genre):
     genre_list = db.query(models.RawData).filter(models.RawData.genre == genre).all()
