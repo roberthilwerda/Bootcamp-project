@@ -1,5 +1,8 @@
-import "./StatsByGenre.css";
+import "./GenreCard.css";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { genreActions } from "../store/genre-slice";
 
 function capitalize(string) {
   try {
@@ -43,17 +46,26 @@ function showGrowth(growth) {
   }
 }
 
-const StatsByGenre = (props) => {
+const GenreCard = (props) => {
+  const dispatch = useDispatch();
   const genre = props.genre;
   const imageUrl = props.imageUrl;
   const ranking = props.ranking;
   const growth = props.growth;
 
+
+  const navigate = useNavigate();
+
+  const clickHandler = (genre) => {
+    dispatch(genreActions.changeSelectedGenre(genre))
+    navigate(`/genre-detail/${genre}`)
+  }
+
   return (
     <div
       className="black_container"
       onClick={() => {
-        props.onClickHandler(genre);
+        clickHandler(genre);
       }}
     >
       <div className="bg-container">
@@ -74,14 +86,6 @@ const StatsByGenre = (props) => {
           <p>
             {ranking}. {capitalize(genre)}{" "}
           </p>
-
-          {/* <div className="play__icon-container"><img
-              className="play__icon"
-              alt=""
-              width="35px"
-              src={require("../img/icon-play.png")}
-            /></div> */}
-
           {showGrowth(growth)}
         </div>
       </div>
@@ -89,4 +93,4 @@ const StatsByGenre = (props) => {
   );
 };
 
-export default StatsByGenre;
+export default GenreCard;

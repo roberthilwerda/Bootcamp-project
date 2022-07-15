@@ -8,10 +8,16 @@ from sqlalchemy import update, text
 from . import models, crud
 from datetime import datetime, timedelta
 import numpy as np
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-    client_id="737f07244f3e435d9a3485e71acdceb7", client_secret="a49eef30bab647e8aa36e4c20c4835e3"))
-
+    client_id=SPOTIFY_CLIENT_ID, client_secret=SPOTIFY_CLIENT_SECRET))
 
 ## Returns an array of all artists in the Billboard Global 200 for a given date
 def extract_chart(date):
@@ -76,7 +82,7 @@ def get_all_enhanced(db: Session):
     ## function that transforms the manipulated Data table to pandas dataframe
     ## function that calculates the trend, based on growth compared to previous month
     return db.execute(text(
-        """
+        """ 
         with cte as (select date, genre, rank_aggregate,image_url,
         lag(rank_aggregate,1) over (partition by genre order by date) previous_rank_aggregate,
         date_part('month', AGE(MIN(date), LEAD(MIN(date)) OVER (PARTITION BY genre ORDER BY date DESC))) as diff_months
@@ -90,6 +96,12 @@ def get_all_enhanced(db: Session):
         order by date desc
         """
         )).all()
+
+def get_genre_detail(genre, db: Session):
+    print(genre)
+    return db.query(models.ManipulatedData).filter(
+        models.ManipulatedData.genre == genre
+    ).all()
 
 
 def get_image(db, genre):

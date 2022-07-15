@@ -1,23 +1,26 @@
 import "./App.css";
-import Header from "./components/Header";
-import WidgetsPage from "./components/WidgetsPage";
-import React, { useState } from "react";
+import Homepage from "./pages/Homepage";
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import GenrePage from "./pages/GenrePage";
+import LandingPage from "./pages/LandingPage";
+import useHttp from "./hooks/use-http";
 
 function App() {
-  const [showHomePage, setShowHomePage] = useState(true);
 
   return (
     <div className={`main`}>
-      <Header
-        setShowHomePage={() => setShowHomePage(true)}
-        unsetShowHomePage={() => setShowHomePage(false)}
-        showHomePage={showHomePage}
-      />
-      <WidgetsPage
-        setShowHomePage={() => setShowHomePage(true)}
-        unsetShowHomePage={() => setShowHomePage(false)}
-        showHomePage={showHomePage}
-      />
+      <BrowserRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/home" element={<Homepage />} />
+            <Route path="/genre-detail/:genre" element={<GenrePage />} />
+          </Routes>
+        </Layout>
+      </BrowserRouter>
     </div>
   );
 }
