@@ -10,22 +10,21 @@ const LandingPage = () => {
       </video>
 
       <div className="get-started__wrapper">
+        
         <div className="landingpage-logo__wrapper">
           <img
             className={`landingpage-logo__content`}
             alt=""
             src={require("../components/images/gtlogo.png")}
           />
-        </div>
-
-        <div className="landingpage-text__wrapper">
-          <h1 className="landingpage-text__content">A platform for music investors</h1>
+          <div className="landingpage-text__wrapper">
+            <h1 className="landingpage-text__content">A platform for music investors</h1>
+          </div>
         </div>
 
         <div className="landingpage-login__wrapper">
           <Facebook />
         </div>
-
       </div>
     </div>
   );

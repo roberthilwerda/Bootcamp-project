@@ -24,6 +24,8 @@ const Header = (props) => {
 
   const logoutHandler = () => {
     dispatch(authActions.unsetCredentials());
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userID");
     navigate("/");
   };
 
@@ -31,7 +33,7 @@ const Header = (props) => {
     return null;
   }
 
-  if (!state) {
+  if (!state || state.auth.loginData.name === null) {
     return <LoadingSpinner />;
   } else {
     return (

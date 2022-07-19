@@ -10,6 +10,7 @@ const Facebook = () => {
 
   const responseFacebook = (response) => {
     if (response.userID) {
+      console.log(response)
       dispatch(
         authActions.setCredentials({
           accessToken: response.accessToken,
@@ -23,7 +24,9 @@ const Facebook = () => {
           userID: response.userID,
         })
       );
-      navigate("/home");
+      localStorage.setItem("accessToken",response.accessToken)
+      localStorage.setItem("userID",response.userID)
+      navigate("/home", {replace:true});
     } else {
       alert("FAIL!!");
     }
