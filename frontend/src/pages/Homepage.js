@@ -110,8 +110,6 @@ const Homepage = (props) => {
     return <p>Failed to fetch data.</p>;
   }
 
-  console.log(filteredData);
-
   if (status === "completed" && (!filteredData || filteredData.length === 0)) {
     return <div>No data available.</div>;
   }

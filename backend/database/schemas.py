@@ -36,3 +36,6 @@ class Genre(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Login(BaseModel):
+    id: int

@@ -18,9 +18,21 @@ const authSlice = createSlice({
 
   reducers: {
     setCredentials(state, action) {
-      console.log(action.payload);
       state.loginData = action.payload;
     },
+    unsetCredentials(state) {
+      state.loginData = {
+        accessToken: "",
+        data_access_expiration_time: 0,
+        email: "",
+        expiresIn: 0,
+        id: "",
+        name: "",
+        picture: "",
+        signedRequest: "",
+        userID: "",
+      }
+    }
   },
 });
 

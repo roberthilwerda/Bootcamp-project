@@ -1,22 +1,15 @@
 import FacebookLogin from "react-facebook-login";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./Facebook.css";
 import { authActions } from "../store/auth-slice";
+import { useNavigate } from "react-router-dom";
 
 const Facebook = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.auth.loginData);
-
-  let fbContent;
-
-  const componentClicked = () => {
-    console.log("CLICKED");
-  };
 
   const responseFacebook = (response) => {
     if (response.userID) {
-      
       dispatch(
         authActions.setCredentials({
           accessToken: response.accessToken,
@@ -30,45 +23,22 @@ const Facebook = () => {
           userID: response.userID,
         })
       );
+      navigate("/home");
     } else {
       alert("FAIL!!");
     }
   };
 
-  if (state.userID) {
-    fbContent = (
-      <ul className="login-wrapper">
-        <li>Logged in as {state.name}</li>
-        <li className="dropdown">
-          <img className="dropbtn" src={state.picture.data.url} alt="profile" />
-          <div className="dropdown-content">
-            <a href="/">Log out</a>
-          </div>
-        </li>
-      </ul>
-    );
-  } else {
-    fbContent = (
-      <FacebookLogin
-        appId="375859024650355"
-        autoLoad={true}
-        language="en_US"
-        isDisabled={false}
-        fields="name,email,picture"
-        onClick={componentClicked}
-        callback={responseFacebook}
-        size="small"
-      />
-    );
-  }
-
-  
-
   return (
-    <div>
-      {fbContent}
-
-    </div>
+    <FacebookLogin
+      appId="375859024650355"
+      autoLoad={true}
+      language="en_US"
+      isDisabled={false}
+      fields="name,email,picture"
+      callback={responseFacebook}
+      size="small"
+    />
   );
 };
 

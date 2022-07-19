@@ -65,10 +65,13 @@ def save_images(db: Session = Depends(get_db)):
 def resolve_growth_rate(db: Session = Depends(get_db)):
     return utils.get_all_enhanced(db=db)
   
-
 @app.get("/get_genre_detail")
 def get_genre_detail(genre: str, db: Session = Depends(get_db)):
     return utils.get_genre_detail(genre=genre, db=db)
+
+@app.post('login')
+def login(request: schemas.Login, db: Session = Depends(get_db)):
+    user = db.query(models.User)
 
 if __name__ == '__main__':
     uvicorn.run(app, port=8000, host="0.0.0.0")
