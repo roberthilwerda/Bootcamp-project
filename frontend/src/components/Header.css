@@ -80,6 +80,68 @@ h4:hover {
   transform: scale(1.1);
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  /* background-color: #333; */
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: wheat;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: black;
+}
+
+.dropbtn{
+  border-radius: 50%;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: black;
+  color: wheat;
+  width: 90px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content span {
+  color: wheat;
+  padding: 12px 0px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-content:hover{
+  font-weight: 1000;
+}
+
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 @media (min-width: 300px) and (max-width: 1100px) {
   .header__logo-area {
     width: 100%;

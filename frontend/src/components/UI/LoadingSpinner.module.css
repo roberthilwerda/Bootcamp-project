@@ -11,7 +11,7 @@
     margin: 8px;
     border-radius: 50%;
     border: 6px solid black;
-    border-color: wheat transparent wheat transparent;
+    border-color: grey transparent grey transparent;
     animation: spinner 1.2s linear infinite;
   }
   @keyframes spinner {

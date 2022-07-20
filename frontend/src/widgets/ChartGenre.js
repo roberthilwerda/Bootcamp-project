@@ -123,7 +123,6 @@ const ChartGenre = (props) => {
       ],
     };
   } else {
-    console.log(chartData)
     data = {
       labels: getLabels(startYear, endYear),
 
@@ -225,7 +224,7 @@ const ChartGenre = (props) => {
     plugins: {
       title: {
         display: true,
-        text: displayYear(props.startYear, props.endYear),
+        text: displayYear(startYear, endYear),
         font: { size: 20, color: "red" },
         color: "wheat",
       },

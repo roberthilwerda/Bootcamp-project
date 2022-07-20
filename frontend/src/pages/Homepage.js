@@ -102,15 +102,13 @@ const Homepage = (props) => {
   };
 
   if (status === "pending") {
-    return <LoadingSpinner />;
+    return <div className="spinner-wrapper"><h1>Loading...</h1><LoadingSpinner /></div>;
   }
 
   if (error) {
     console.log(error);
     return <p>Failed to fetch data.</p>;
   }
-
-  console.log(filteredData);
 
   if (status === "completed" && (!filteredData || filteredData.length === 0)) {
     return <div>No data available.</div>;

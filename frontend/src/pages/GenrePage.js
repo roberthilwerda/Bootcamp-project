@@ -34,7 +34,7 @@ const GenrePage = (props) => {
   }
 
   if (status === "pending") {
-    return <LoadingSpinner />;
+    return <div className="spinner-wrapper"><h1>Loading...</h1><LoadingSpinner /></div>;
   }
 
   if (error) {
