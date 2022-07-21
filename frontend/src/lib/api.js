@@ -34,6 +34,19 @@ export async function validateUser(userData) {
   return data;
 }
 
+export async function logout(accessToken) {
+
+  const response = await fetch(`${DOMAIN}/logout?access_token=${accessToken}`);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Could not logout user.');
+  }
+  
+  return data;
+}
+
+
 export async function fbLogin(fbResponse) {
   const response = await fetch(`${DOMAIN}/login`, {
     method: 'POST',

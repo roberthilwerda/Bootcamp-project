@@ -6,20 +6,25 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { authActions } from "../store/auth-slice";
 import LoadingSpinner from "./UI/LoadingSpinner";
 import { useEffect } from "react";
+import useHttp from "../hooks/use-http";
+import { logout } from "../lib/api";
 
 const Header = (props) => {
   const state = useSelector((state) => state);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { sendRequest, status, data, error } = useHttp(logout)
 
 
   const logoutHandler = () => {
+    sendRequest(state.auth.loginData.accessToken)
     dispatch(authActions.unsetCredentials());
     localStorage.removeItem("accessToken");
     localStorage.removeItem("expireTimeToken");
     localStorage.removeItem("userID");
     navigate("/");
+   
   };
 
   if (location.pathname === "/") {

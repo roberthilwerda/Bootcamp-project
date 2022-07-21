@@ -1,10 +1,11 @@
+from cmath import nan
 import billboard
 from numpy import NaN 
 import spotipy
 import spotipy.util as util 
 from spotipy.oauth2 import SpotifyClientCredentials
 from sqlalchemy.orm import Session
-from sqlalchemy import update, text
+from sqlalchemy import null, update, text
 from . import models, crud, schemas
 from datetime import datetime, timedelta
 import numpy as np
@@ -146,16 +147,10 @@ def login_user(request_body: schemas.User, db: Session):
             user_id=user_id,
             name=request_body.name,
             email=request_body.email,
-            picture_url=request_body.picture_url
+            picture_url=request_body.picture_url,
+            access_token=request_body.access_token
         )
         db.add(db_user_item)
-
-        db_access_token_item = models.AccessToken(
-            access_token=request_body.access_token,
-            user_id=user_id
-        )
-
-        db.add(db_access_token_item)
 
         try:
             db.commit()
@@ -163,32 +158,67 @@ def login_user(request_body: schemas.User, db: Session):
                 user_id=user_id,
                 name=request_body.name,
                 email=request_body.email,
-                picture_url=request_body.picture_url
+                picture_url=request_body.picture_url,
+                access_token=request_body.access_token
             )
         except Exception as e:
             raise e
+    ## If user exists, update accesstoken of the record
     else:
-        return query
+        item = schemas.UpdateAccessTokenSchema(
+            access_token=access_token
+        )
+
+        db.query(models.User).filter(models.User.user_id == user_id).update({models.User.access_token: access_token})
+
+        try:
+            db.commit()
+
+            return schemas.User(
+                user_id=user_id,
+                name=request_body.name,
+                email=request_body.email,
+                picture_url=request_body.picture_url,
+                access_token=request_body.access_token
+            )
+        except Exception as e:
+            print(e)
+            raise e
 
 def validate_user(user_id, access_token, db: Session):
-    query = db.query(models.User, models.AccessToken
+    query = db.query(models.User
     ).filter(
-        models.AccessToken.access_token == access_token
+        models.User.access_token == access_token
     ).filter(
-        models.AccessToken.user_id == user_id
+        models.User.user_id == user_id
     ).first()
 
     return query
 
 def logout(access_token, db: Session):
-    query = db.query(models.AccessToken).filter(
-        models.AccessToken.access_token == access_token
-    ).first()
 
+    item = schemas.UpdateAccessTokenSchema(
+        access_token=access_token
+    )
+  
+    db.query(models.User).filter(
+        models.User.access_token == item.access_token
+    ).update(
+        {models.User.access_token: ""}, synchronize_session=False
+    )
+
+    try:
+        db.commit()
+    except Exception as e:
+     
+        print(e)
+        raise e
     ##TODO: db.delete the accesstoken and user
+
+    return("Successfully logged out")
+
     ##TODO  when a user visits '/' and is logged in, redirect to '/home'
 
-    return query
 
 
 

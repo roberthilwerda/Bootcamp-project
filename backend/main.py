@@ -77,6 +77,9 @@ def login(request_body: schemas.User, db: Session = Depends(get_db)):
 def login(user_id: str, access_token: str, db: Session = Depends(get_db)):
     return utils.validate_user(user_id=user_id, access_token=access_token, db=db)
 
+@app.get('/logout')
+def logout(access_token: str, db: Session = Depends(get_db)):
+    return utils.logout(access_token=access_token, db=db)
 
 if __name__ == '__main__':
     uvicorn.run(app, port=8000, host="0.0.0.0")

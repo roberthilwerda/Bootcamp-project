@@ -45,3 +45,7 @@ class User(BaseModel):
     picture_url: str
     access_token: Optional[str]
 
+class UpdateAccessTokenSchema(BaseModel):
+    access_token: str
+
+

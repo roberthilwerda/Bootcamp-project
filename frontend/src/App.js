@@ -31,11 +31,11 @@ function App() {
         console.log("boom")
         dispatch(authActions.setCredentials(
           {
-            email: data.User.email,
-            name: data.User.name,
-            picture: data.User.picture_url,
+            email: data.email,
+            name: data.name,
+            picture: data.picture_url,
             accessToken: accessToken,
-            userID: data.User.user_id,
+            userID: data.user_id,
           }
         ))
       }
