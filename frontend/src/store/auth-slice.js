@@ -5,14 +5,11 @@ const authSlice = createSlice({
   initialState: {
     loginData: {
       accessToken: localStorage.getItem("accessToken"),
-      data_access_expiration_time: 0,
       email: null,
       expiresIn: 0,
-      id: null,
       name: null,
       picture: null,
-      signedRequest: null,
-      userID: localStorage.getItem("accessToken"),
+      userID: localStorage.getItem("userID"),
     },
   },
 

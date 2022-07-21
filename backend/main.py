@@ -69,9 +69,14 @@ def resolve_growth_rate(db: Session = Depends(get_db)):
 def get_genre_detail(genre: str, db: Session = Depends(get_db)):
     return utils.get_genre_detail(genre=genre, db=db)
 
-@app.post('login')
-def login(request: schemas.Login, db: Session = Depends(get_db)):
-    user = db.query(models.User)
+@app.post('/login')
+def login(request_body: schemas.User, db: Session = Depends(get_db)):
+    return utils.login_user(request_body, db=db)
+
+@app.get('/validate_user')
+def login(user_id: str, access_token: str, db: Session = Depends(get_db)):
+    return utils.validate_user(user_id=user_id, access_token=access_token, db=db)
+
 
 if __name__ == '__main__':
     uvicorn.run(app, port=8000, host="0.0.0.0")

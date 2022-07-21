@@ -8,23 +8,16 @@ import LoadingSpinner from "./UI/LoadingSpinner";
 import { useEffect } from "react";
 
 const Header = (props) => {
-  const [showMenuItems, setShowMenuItems] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const state = useSelector((state) => state);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const clickHandler = () => {
-    showMenuItems ? setShowMenuItems(false) : setShowMenuItems(true);
-  };
 
-  const goHomeHandler = () => {
-    navigate("/home");
-  };
 
   const logoutHandler = () => {
     dispatch(authActions.unsetCredentials());
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("expireTimeToken");
     localStorage.removeItem("userID");
     navigate("/");
   };
@@ -44,34 +37,11 @@ const Header = (props) => {
           </div>
         </div>
 
-        {/* <div className="header__menu-area">
-          <div onClick={clickHandler} className="header__menu-area-hamburger">
-            <h2>{showMenuItems ? "✕" : "☰"}</h2>
-          </div>
-
-          <div
-            className="header__menu-area-items"
-            style={{
-              display: showMenuItems ? "flex" : "none",
-            }}
-          >
-            <div className="header__item" onClick={goHomeHandler}>
-              <h4>Home</h4>
-            </div>
-            <div className="header__item">
-              <h4>Get Trends</h4>
-            </div>
-            <div className="header__item">
-              <h4>Contact</h4>
-            </div>
-          </div>
-        </div> */}
-
         <div className="header__menu-area">
           <ul className="login-wrapper">
             <li>Logged in as {state.auth.loginData.name}</li>
             <li className="dropdown">
-              <img className="dropbtn" src={state.auth.loginData.picture.data.url} alt="profile" />
+              <img className="dropbtn" src={state.auth.loginData.picture} alt="profile" />
               <div onClick={logoutHandler} className="dropdown-content">
                 <span>Log out</span>
               </div>

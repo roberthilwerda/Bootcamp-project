@@ -36,4 +36,19 @@ class Genre(Base):
 
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
+    user_id = Column(String, primary_key=True)
+    email = Column(String)
+    name = Column(String)
+    picture_url = Column(String)
+    favorite_genre = Column(String)
+
+    access_token = relationship("AccessToken", back_populates="user", cascade="all, delete")
+
+class AccessToken(Base):
+    __tablename__ = "access_token"
+    id = Column(Integer, primary_key = True)
+    access_token = Column(String)
+    user_id = Column(String, ForeignKey("user.user_id"))
+    
+    user = relationship("User", back_populates="access_token")
+

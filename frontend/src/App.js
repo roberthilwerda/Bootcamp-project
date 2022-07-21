@@ -2,17 +2,45 @@ import "./App.css";
 import Homepage from "./pages/Homepage";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import { validateUser } from "./lib/api";
 import GenrePage from "./pages/GenrePage";
 import LandingPage from "./pages/LandingPage";
 import useHttp from "./hooks/use-http";
+import { authActions } from "./store/auth-slice";
 
 function App() {
+  const { sendRequest, status, data, error } = useHttp(validateUser);
   const state = useSelector((state) => state);
-  const isLoggedIn = !!state.auth.loginData.accessToken;
+  const dispatch = useDispatch();
+  const accessToken = localStorage.getItem("accessToken");
+  const userID = localStorage.getItem("userID");
+  const isLoggedIn = !!state.auth.loginData.userID;
 
-  console.log(isLoggedIn);
+  useEffect(() => {
+    if (state.auth.loginData.name === null && userID && accessToken) {
+      sendRequest({ userID: userID, accessToken: accessToken });
+    }
+  }, [sendRequest, state.auth.loginData, accessToken, userID]);
+
+  useEffect(() => {
+    console.log(status)
+    if(status === 'completed' && data){
+
+        console.log("boom")
+        dispatch(authActions.setCredentials(
+          {
+            email: data.User.email,
+            name: data.User.name,
+            picture: data.User.picture_url,
+            accessToken: accessToken,
+            userID: data.User.user_id,
+          }
+        ))
+      }
+    
+  }, [status, data, accessToken, dispatch])
 
   return (
     <div className={`main`}>

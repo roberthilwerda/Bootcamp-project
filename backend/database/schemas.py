@@ -37,5 +37,11 @@ class Genre(BaseModel):
     class Config:
         orm_mode = True
 
-class Login(BaseModel):
-    id: int
+class User(BaseModel):
+    user_id: str
+    email: str
+    name: str
+    favorite_genre: Optional[str]
+    picture_url: str
+    access_token: Optional[str]
+

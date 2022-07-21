@@ -5,7 +5,7 @@ import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
 from sqlalchemy.orm import Session
 from sqlalchemy import update, text
-from . import models, crud
+from . import models, crud, schemas
 from datetime import datetime, timedelta
 import numpy as np
 from dotenv import load_dotenv
@@ -133,7 +133,66 @@ def save_images(db):
         db.execute(update(model).where(model.id == x.id).values({'image_url' : str(image_url[0])}))
         db.commit()
 
+def login_user(request_body: schemas.User, db: Session):
+    user_id = request_body.user_id
+    access_token = request_body.access_token
+    query = db.query(models.User).filter(
+        models.User.user_id == user_id
+    ).first()
 
+    ## If user does not exist yet
+    if not query:
+        db_user_item = models.User(
+            user_id=user_id,
+            name=request_body.name,
+            email=request_body.email,
+            picture_url=request_body.picture_url
+        )
+        db.add(db_user_item)
+
+        db_access_token_item = models.AccessToken(
+            access_token=request_body.access_token,
+            user_id=user_id
+        )
+
+        db.add(db_access_token_item)
+
+        try:
+            db.commit()
+            return schemas.User(
+                user_id=user_id,
+                name=request_body.name,
+                email=request_body.email,
+                picture_url=request_body.picture_url
+            )
+        except Exception as e:
+            raise e
+    else:
+        return query
+
+def validate_user(user_id, access_token, db: Session):
+    query = db.query(models.User, models.AccessToken
+    ).filter(
+        models.AccessToken.access_token == access_token
+    ).filter(
+        models.AccessToken.user_id == user_id
+    ).first()
+
+    return query
+
+def logout(access_token, db: Session):
+    query = db.query(models.AccessToken).filter(
+        models.AccessToken.access_token == access_token
+    ).first()
+
+    ##TODO: db.delete the accesstoken and user
+    ##TODO  when a user visits '/' and is logged in, redirect to '/home'
+
+    return query
+
+
+
+ 
 
 
 
